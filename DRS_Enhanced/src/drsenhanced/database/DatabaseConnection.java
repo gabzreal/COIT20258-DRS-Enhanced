@@ -26,7 +26,7 @@ public class DatabaseConnection {
     /**
      * MySQL password.
      */
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "pass";
 
     /**
      * Returns a connection to the MySQL database.
