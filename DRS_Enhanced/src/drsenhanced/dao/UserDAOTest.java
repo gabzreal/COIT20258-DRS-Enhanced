@@ -18,11 +18,13 @@ public class UserDAOTest {
 
         UserDAO userDAO = new UserDAO();
 
+        String username = "admin_test_" + System.currentTimeMillis();
+
         String hashedPassword
                 = PasswordUtil.hashPassword("admin123");
 
         boolean success = userDAO.addUser(
-                "admin",
+                username,
                 hashedPassword,
                 "System Administrator",
                 "ADMIN"
