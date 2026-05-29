@@ -30,3 +30,6 @@ This project is a 3-tier Java Disaster Response System with:
 - Each member works only on their assigned branch.
 - Use clear commit messages.
 - Create GitHub Issues for problems found and resolved.
+
+
+making staging branch
