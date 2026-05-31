@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="720.0"
+            prefWidth="1280.0"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="drsenhanced.client.controller.EvacuationShelterController"
+            style="-fx-background-color: linear-gradient(to bottom right, #0f172a, #111827);">
+
+    <children>
+
+        <Label layoutX="40.0"
+               layoutY="25.0"
+               text="Evacuation Shelter Management"
+               style="-fx-text-fill: white;
+                      -fx-font-size: 30px;
+                      -fx-font-weight: bold;" />
+
+        <!-- LEFT PANEL -->
+
+        <VBox layoutX="40.0"
+              layoutY="90.0"
+              prefWidth="400.0"
+              spacing="15.0"
+              style="-fx-background-color: #1f2937;
+                     -fx-background-radius: 12;
+                     -fx-padding: 20;">
+
+            <Label text="Shelter Assignment"
+                   style="-fx-text-fill: white;
+                          -fx-font-size: 20px;
+                          -fx-font-weight: bold;" />
+
+            <Label text="People Affected"
+                   style="-fx-text-fill: white;" />
+            <Label text="Evacuation Priority"
+                   style="-fx-text-fill: white;" />
+
+            <ComboBox fx:id="cmbPriority"
+                      promptText="Select Priority" />
+
+            <TextField fx:id="txtPeopleAffected"
+                       promptText="Enter Number of People" />
+
+            <Label text="Select Shelter"
+                   style="-fx-text-fill: white;" />
+
+            <ComboBox fx:id="cmbShelter"
+                      promptText="Choose Shelter" />
+            <Label text="Special Requirements"
+                   style="-fx-text-fill: white;" />
+
+            <TextArea fx:id="txtRequirements"
+                      prefHeight="80"
+                      promptText="Medical support, wheelchair access, family accommodation..." />
+
+            <Button fx:id="btnCheckCapacity"
+                    text="Check Capacity"
+                    onAction="#handleCheckCapacity"
+                    style="-fx-background-color: #2563eb;
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;" />
+
+            <Button fx:id="btnAssignShelter"
+                    text="Assign Shelter"
+                    onAction="#handleAssignShelter"
+                    style="-fx-background-color: #b30000;
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;" />
+
+            <Button fx:id="btnBack"
+                    text="Back to Dashboard"
+                    onAction="#handleBack"
+                    style="-fx-background-color: #047857;
+                           -fx-text-fill: white;" />
+
+        </VBox>
+
+        <!-- RIGHT PANEL -->
+
+        <VBox layoutX="480.0"
+              layoutY="90.0"
+              prefWidth="720.0"
+              spacing="20.0"
+              style="-fx-background-color: #1f2937;
+                     -fx-background-radius: 12;
+                     -fx-padding: 20;">
+
+            <Label text="Shelter Capacity Information"
+                   style="-fx-text-fill: white;
+                          -fx-font-size: 22px;
+                          -fx-font-weight: bold;" />
+
+            <HBox spacing="20">
+
+                <VBox prefWidth="200"
+                      prefHeight="120"
+                      spacing="10"
+                      style="-fx-background-color: #1d4ed8;
+                             -fx-background-radius: 12;
+                             -fx-padding: 15;">
+
+                    <Label text="🏠 Total Capacity"
+                           style="-fx-text-fill: white;
+                                  -fx-font-size: 16px;
+                                  -fx-font-weight: bold;" />
+
+                    <Label fx:id="lblCapacity"
+                           text="0"
+                           style="-fx-text-fill: white;
+                                  -fx-font-size: 32px;
+                                  -fx-font-weight: bold;" />
+
+                </VBox>
+
+                <VBox prefWidth="200"
+                      prefHeight="120"
+                      spacing="10"
+                      style="-fx-background-color: #dc2626;
+                             -fx-background-radius: 12;
+                             -fx-padding: 15;">
+
+                    <Label text="👥 Occupied"
+                           style="-fx-text-fill: white;
+                                  -fx-font-size: 16px;
+                                  -fx-font-weight: bold;" />
+
+                    <Label fx:id="lblOccupied"
+                           text="0"
+                           style="-fx-text-fill: white;
+                                  -fx-font-size: 32px;
+                                  -fx-font-weight: bold;" />
+
+                </VBox>
+
+                <VBox prefWidth="200"
+                      prefHeight="120"
+                      spacing="10"
+                      style="-fx-background-color: #047857;
+                             -fx-background-radius: 12;
+                             -fx-padding: 15;">
+
+                    <Label text="✅ Available"
+                           style="-fx-text-fill: white;
+                                  -fx-font-size: 16px;
+                                  -fx-font-weight: bold;" />
+
+                    <Label fx:id="lblRemaining"
+                           text="0"
+                           style="-fx-text-fill: white;
+                                  -fx-font-size: 32px;
+                                  -fx-font-weight: bold;" />
+
+                </VBox>
+
+            </HBox>
+            <Label text="Shelter Status Overview"
+                   style="-fx-text-fill:white;
+              -fx-font-size:18px;
+              -fx-font-weight:bold;" />
+
+            <HBox spacing="15">
+
+                <VBox prefWidth="160"
+                      style="-fx-background-color:#047857;
+                 -fx-background-radius:10;
+                 -fx-padding:12;">
+
+                    <Label text="🟢 Footscray"
+                           style="-fx-text-fill:white;
+                      -fx-font-weight:bold;" />
+
+                    <Label text="120 Available"
+                           style="-fx-text-fill:white;" />
+
+                </VBox>
+
+                <VBox prefWidth="160"
+                      style="-fx-background-color:#ca8a04;
+                 -fx-background-radius:10;
+                 -fx-padding:12;">
+
+                    <Label text="🟡 Sunshine"
+                           style="-fx-text-fill:white;
+                      -fx-font-weight:bold;" />
+
+                    <Label text="35 Available"
+                           style="-fx-text-fill:white;" />
+
+                </VBox>
+
+                <VBox prefWidth="160"
+                      style="-fx-background-color:#ea580c;
+                 -fx-background-radius:10;
+                 -fx-padding:12;">
+
+                    <Label text="🟠 Werribee"
+                           style="-fx-text-fill:white;
+                      -fx-font-weight:bold;" />
+
+                    <Label text="Near Capacity"
+                           style="-fx-text-fill:white;" />
+
+                </VBox>
+
+            </HBox>
+
+            <TableView fx:id="tblShelters"
+                       prefHeight="350">
+
+                <columns>
+
+                    <TableColumn fx:id="colShelter"
+                                 text="Shelter Name"
+                                 prefWidth="220"/>
+
+                    <TableColumn fx:id="colCapacity"
+                                 text="Capacity"
+                                 prefWidth="150"/>
+
+                    <TableColumn fx:id="colOccupied"
+                                 text="Occupied"
+                                 prefWidth="150"/>
+
+                    <TableColumn fx:id="colAvailable"
+                                 text="Available"
+                                 prefWidth="150"/>
+
+                </columns>
+
+            </TableView>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>
