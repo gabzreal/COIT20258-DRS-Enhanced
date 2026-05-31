@@ -17,6 +17,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import drsenhanced.util.SceneManager;
+import javafx.event.ActionEvent;
+import javafx.stage.Stage;
 
 /**
  * LoginController handles the login screen functionality for the DRS Enhanced
