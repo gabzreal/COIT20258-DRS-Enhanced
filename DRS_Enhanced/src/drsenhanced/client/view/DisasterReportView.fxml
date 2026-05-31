@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="720.0"
+            prefWidth="1280.0"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="drsenhanced.client.controller.DisasterReportController"
+            style="-fx-background-color: linear-gradient(to bottom right, #0f172a, #111827);">
+
+    <children>
+
+        <!-- Header -->
+
+        <Label layoutX="40.0"
+               layoutY="25.0"
+               text="Disaster Report Management"
+               style="-fx-text-fill: white;
+                      -fx-font-size: 30px;
+                      -fx-font-weight: bold;" />
+
+        <!-- Left Panel -->
+
+        <VBox layoutX="40.0"
+              layoutY="90.0"
+              prefWidth="400.0"
+              spacing="15.0"
+              style="-fx-background-color: #1f2937;
+                     -fx-background-radius: 12;
+                     -fx-padding: 20;">
+
+            <Label text="Create Emergency Incident Report"
+                   style="-fx-text-fill: white;
+              -fx-font-size: 20px;
+              -fx-font-weight: bold;" />
+
+            <Label text="Disaster Type"
+                   style="-fx-text-fill: white;" />
+
+            <ComboBox fx:id="cmbDisasterType"
+                      promptText="Select Disaster Type" />
+            <Label text="Priority Level"
+                   style="-fx-text-fill: white;" />
+
+            <ComboBox fx:id="cmbPriority"
+                      promptText="Select Priority" />
+
+            <Label text="Location"
+                   style="-fx-text-fill: white;" />
+            <Label text="Melbourne Suburb"
+                   style="-fx-text-fill: white;" />
+
+            <ComboBox fx:id="cmbSuburb"
+                      promptText="Select Suburb" />
+
+            <TextField fx:id="txtLocation"
+                       promptText="Enter Location" />
+
+            <Label text="People Affected"
+                   style="-fx-text-fill: white;" />
+            <Label text="Reported By"
+                   style="-fx-text-fill: white;" />
+
+            <TextField fx:id="txtReportedBy"
+                       promptText="Officer or Agency Name" />
+
+            <TextField fx:id="txtPeopleAffected"
+                       promptText="Number of People" />
+
+            <Label text="Description"
+                   style="-fx-text-fill: white;" />
+
+            <TextArea fx:id="txtDescription"
+                      prefHeight="120.0"
+                      promptText="Describe the incident..." />
+
+            <Button fx:id="btnSubmitReport"
+                    text="Submit Report"
+                    onAction="#handleSubmitReport"
+                    prefWidth="200.0"
+                    style="-fx-background-color: #b30000;
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;" />
+
+            <Button fx:id="btnClear"
+                    text="Clear Form"
+                    onAction="#handleClear"
+                    prefWidth="200.0"
+                    style="-fx-background-color: #374151;
+                           -fx-text-fill: white;" />
+
+            <Button fx:id="btnBack"
+                    text="Back to Dashboard"
+                    onAction="#handleBack"
+                    prefWidth="200.0"
+                    style="-fx-background-color: #047857;
+                           -fx-text-fill: white;" />
+
+        </VBox>
+
+        <!-- Right Panel -->
+
+        <VBox layoutX="480.0"
+              layoutY="90.0"
+              prefWidth="740.0"
+              prefHeight="560.0"
+              spacing="10.0"
+              style="-fx-background-color: #1f2937;
+                     -fx-background-radius: 12;
+                     -fx-padding: 20;">
+
+            <Label text="Submitted Reports"
+                   style="-fx-text-fill: white;
+                          -fx-font-size: 20px;
+                          -fx-font-weight: bold;" />
+
+            <TableView fx:id="tblReports"
+                       prefHeight="500.0">
+
+                <columns>
+
+                    <TableColumn fx:id="colReportId"
+                                 text="Report ID"
+                                 prefWidth="100.0" />
+
+                    <TableColumn fx:id="colType"
+                                 text="Type"
+                                 prefWidth="120.0" />
+
+                    <TableColumn fx:id="colLocation"
+                                 text="Location"
+                                 prefWidth="180.0" />
+
+                    <TableColumn fx:id="colAffected"
+                                 text="Affected"
+                                 prefWidth="120.0" />
+
+                    <TableColumn fx:id="colStatus"
+                                 text="Status"
+                                 prefWidth="150.0" />
+
+                </columns>
+
+            </TableView>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>
