@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ProgressBar?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="drsenhanced.client.controller.IncidentAssessmentController"
+            prefWidth="1400"
+            prefHeight="850"
+            style="-fx-background-color:#F4F6F8;">
+
+    <!-- HEADER -->
+
+    <top>
+
+        <HBox alignment="CENTER_LEFT"
+              prefHeight="70"
+              style="-fx-background-color:#D32F2F;">
+
+            <padding>
+                <Insets left="30" right="30"/>
+            </padding>
+
+            <Label text="🎯 Incident Assessment Centre"
+                   style="
+                        -fx-text-fill:white;
+                        -fx-font-size:28;
+                        -fx-font-weight:bold;
+                   "/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="⬅ Back"
+                    onAction="#handleBack"
+                    prefWidth="110"
+                    prefHeight="42"
+                    style="
+                        -fx-background-color:#757575;
+                        -fx-text-fill:white;
+                        -fx-font-size:15;
+                        -fx-font-weight:bold;
+                        -fx-background-radius:10;
+                    "/>
+
+        </HBox>
+
+    </top>
+
+    <!-- CONTENT -->
+
+    <center>
+
+        <ScrollPane fitToWidth="true"
+                    style="-fx-background:#F4F6F8;">
+
+            <content>
+
+                <VBox spacing="20">
+
+                    <padding>
+                        <Insets top="30"
+                                right="40"
+                                bottom="30"
+                                left="40"/>
+                    </padding>
+
+                    <!-- INCIDENT DETAILS -->
+
+                    <VBox spacing="8"
+                          style="
+            -fx-background-color:#FFF3E0;
+            -fx-background-radius:12;
+            -fx-padding:20;
+      ">
+
+                        <Label text="🔥 FIRE INCIDENT"
+                               style="
+                -fx-font-size:28;
+                -fx-font-weight:bold;
+                -fx-text-fill:#D32F2F;
+           "/>
+
+                        <Label text="Melbourne CBD"
+                               style="
+                -fx-font-size:18;
+                -fx-text-fill:#455A64;
+           "/>
+
+                        <Label text="Priority: HIGH"
+                               style="
+                -fx-background-color:#D32F2F;
+                -fx-text-fill:white;
+                -fx-padding:5 15;
+                -fx-background-radius:20;
+                -fx-font-weight:bold;
+           "/>
+
+                    </VBox>
+
+                    <!-- DISPATCH + SMART PANEL -->
+
+                    <HBox spacing="20">
+
+                        <!-- DISPATCH -->
+
+                        <VBox spacing="15"
+                              prefWidth="550"
+                              style="
+                                    -fx-background-color:white;
+                                    -fx-padding:20;
+                                    -fx-background-radius:12;
+                                    -fx-border-radius:12;
+                                    -fx-border-color:#E0E0E0;
+                              ">
+
+                            <Label text="🚒 Resource Dispatch"
+                                   style="
+                                        -fx-font-size:20;
+                                        -fx-font-weight:bold;
+                                   "/>
+
+                            <HBox spacing="15"
+                                  style="
+            -fx-background-color:#F8F9FA;
+            -fx-background-radius:10;
+            -fx-padding:15;
+      ">
+
+                                <Label text="🚒"
+                                       style="-fx-font-size:28;"/>
+
+                                <VBox>
+
+                                    <Label text="Fire Rescue Victoria"
+                                           style="
+                    -fx-font-size:16;
+                    -fx-font-weight:bold;
+               "/>
+
+                                    <Label text="12 Units Available"
+                                           style="-fx-text-fill:#2E7D32;"/>
+
+                                </VBox>
+
+                            </HBox>
+
+                            <CheckBox text="🚑 Ambulance Victoria"/>
+
+                            <CheckBox text="👮 Victoria Police"/>
+
+                            <CheckBox text="🏠 Emergency Shelter Team"/>
+
+                            <Button text="🚨 CONFIRM EMERGENCY DISPATCH"
+                                    onAction="#handleDispatch"
+                                    prefWidth="350"
+                                    prefHeight="60"
+                                    style="
+            -fx-background-color:#D32F2F;
+            -fx-text-fill:white;
+            -fx-font-size:20;
+            -fx-font-weight:bold;
+            -fx-background-radius:12;
+        "/>
+
+                            <Label fx:id="dispatchStatusLabel"
+                                   text=""
+                                   style="
+                                        -fx-font-size:15;
+                                        -fx-font-weight:bold;
+                                   "/>
+
+                        </VBox>
+                        <VBox spacing="8">
+
+                            <Label text="Overall Risk Level"
+                                   style="
+                -fx-font-size:18;
+                -fx-font-weight:bold;
+           "/>
+
+                            <ProgressBar progress="0.92"
+                                         prefWidth="350"/>
+
+                            <Label text="CRITICAL (92%)"
+                                   style="
+                -fx-text-fill:#D32F2F;
+                -fx-font-size:16;
+                -fx-font-weight:bold;
+           "/>
+
+                        </VBox>
+
+                        <!-- SMART RECOMMENDATION -->
+
+                        <VBox spacing="10"
+                              style="
+            -fx-background-color:#E8F5E9;
+            -fx-background-radius:12;
+            -fx-padding:20;
+      ">
+
+                            <Label text="🤖 AI Resource Recommendation"
+                                   style="
+                -fx-font-size:18;
+                -fx-font-weight:bold;
+           "/>
+
+                            <Label text="🚒 Fire Units Required: 4"/>
+
+                            <Label text="🚑 Ambulances Required: 2"/>
+
+                            <Label text="👮 Police Units Required: 1"/>
+
+                            <Separator/>
+
+                            <Label text="⏱ ETA: 7 Minutes"
+                                   style="
+                -fx-font-weight:bold;
+                -fx-text-fill:#2E7D32;
+           "/>
+
+                            <Label text="⚡ Confidence: 92%"
+                                   style="
+                -fx-font-weight:bold;
+                -fx-text-fill:#1565C0;
+           "/>
+
+                        </VBox>
+
+                    </HBox>
+
+                    <!-- IMPACT ANALYSIS -->
+
+                    <VBox spacing="10"
+                          style="
+            -fx-background-color:white;
+            -fx-background-radius:12;
+            -fx-padding:20;
+            -fx-border-color:#E0E0E0;
+            -fx-border-radius:12;
+      ">
+
+                        <Label text="🏗 Infrastructure Impact"
+                               style="
+                -fx-font-size:20;
+                -fx-font-weight:bold;
+           "/>
+
+                        <Label text="🚧 Road Closures Expected"/>
+
+                        <Label text="🚋 Tram Services Affected"/>
+
+                        <Label text="⚡ Power Network Risk"/>
+
+                        <Label text="🏢 Nearby Buildings At Risk"/>
+
+                    </VBox>
+
+                    <!-- FORECAST -->
+
+                    <VBox spacing="10"
+                          style="
+            -fx-background-color:#FFF8E1;
+            -fx-background-radius:12;
+            -fx-padding:20;
+      ">
+
+                        <Label text="📈 Predictive Escalation Forecast"
+                               style="
+                -fx-font-size:20;
+                -fx-font-weight:bold;
+           "/>
+
+                        <Label text="15 mins → Critical"/>
+
+                        <Label text="30 mins → Severe Infrastructure Damage"/>
+
+                        <Label text="45 mins → Multi-Zone Impact"/>
+
+                        <Separator/>
+
+                        <Label text="Recommended Action:"
+                               style="-fx-font-weight:bold;"/>
+
+                        <Label text="Immediate Multi-Agency Deployment"
+                               style="
+                -fx-text-fill:#D32F2F;
+                -fx-font-weight:bold;
+           "/>
+
+                    </VBox>
+
+                </VBox>
+
+            </content>
+
+        </ScrollPane>
+
+    </center>
+
+</BorderPane>
