@@ -1,108 +1,403 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ */
 package drsenhanced.client.controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import drsenhanced.util.SceneManager;
-import javafx.event.ActionEvent;
-import javafx.scene.Node;
-import javafx.stage.Stage;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 public class DisasterReportController {
 
     @FXML
-    private ComboBox<String> cmbDisasterType;
+    private Label severityLabel;
 
     @FXML
-    private TextField txtLocation;
+    private Label impactLabel;
 
     @FXML
-    private TextField txtPeopleAffected;
+    private Label safetyLabel;
 
     @FXML
-    private TextArea txtDescription;
+    private Label selectedTypeLabel;
+
+    private String selectedDisasterType;
 
     @FXML
-    private ComboBox<String> cmbPriority;
+    private TextField locationField;
 
     @FXML
-    private ComboBox<String> cmbSuburb;
+    private Label selectedSeverityLabel;
+
+    private String selectedSeverity;
 
     @FXML
-    private TextField txtReportedBy;
+    private Label severityStatusLabel;
+    @FXML
+    private VBox severityCard;
 
     @FXML
-    public void initialize() {
+    private void selectFire() {
 
-        cmbDisasterType.getItems().addAll(
-                "Flood",
-                "Grassfire",
-                "Storm",
-                "Hazardous Material Spill",
-                "Road Traffic Incident",
-                "Building Fire",
-                "Medical Emergency"
-        );
-        cmbPriority.getItems().addAll(
-                "Low",
-                "Medium",
-                "High",
-                "Critical"
-        );
+        selectedDisasterType = "Fire";
+        selectedTypeLabel.setText("Selected: FIRE");
+    }
 
-        cmbSuburb.getItems().addAll(
-                "Melbourne CBD",
-                "Footscray",
-                "Werribee",
-                "Sunshine",
-                "Broadmeadows",
-                "Dandenong",
-                "Frankston",
-                "Geelong"
+    @FXML
+    private void selectFlood() {
+
+        selectedDisasterType = "Flood";
+        selectedTypeLabel.setText("Selected: FLOOD");
+    }
+
+    @FXML
+    private void selectStorm() {
+
+        selectedDisasterType = "Storm";
+        selectedTypeLabel.setText("Selected: STORM");
+    }
+
+    @FXML
+    private void selectCollapse() {
+
+        selectedDisasterType = "Building Collapse";
+        selectedTypeLabel.setText("Selected: BUILDING COLLAPSE");
+    }
+
+    @FXML
+    private void selectOutage() {
+
+        selectedDisasterType = "Power Outage";
+        selectedTypeLabel.setText("Selected: POWER OUTAGE");
+    }
+
+    @FXML
+    private void selectOther() {
+
+        selectedDisasterType = "Other";
+        selectedTypeLabel.setText("Selected: OTHER");
+    }
+
+    @FXML
+    private void selectMinor() {
+
+        selectedSeverity = "Minor";
+
+        selectedSeverityLabel.setText(
+                "Selected Severity: MINOR"
         );
     }
 
     @FXML
-    private void handleSubmitReport() {
+    private void selectModerate() {
 
-        if (cmbDisasterType.getValue() == null
-                || txtLocation.getText().isBlank()
-                || txtPeopleAffected.getText().isBlank()) {
+        selectedSeverity = "Moderate";
 
-            System.out.println("Please complete all required fields.");
+        selectedSeverityLabel.setText(
+                "Selected Severity: MODERATE"
+        );
+    }
+
+    @FXML
+    private void selectSevere() {
+
+        selectedSeverity = "Severe";
+
+        selectedSeverityLabel.setText(
+                "Selected Severity: SEVERE"
+        );
+    }
+
+    @FXML
+    private void handleUpload() {
+
+        System.out.println("Upload evidence");
+    }
+
+    @FXML
+    private void handleLiveLocation() {
+
+        locationField.setText(
+                "Flinders Street Station, Melbourne VIC"
+        );
+    }
+
+    @FXML
+    private void handleSubmit() {
+
+        if (selectedDisasterType == null) {
+
+            severityLabel.setText(
+                    "Select disaster type first"
+            );
+
             return;
         }
 
-        System.out.println("Report Submitted");
-    }
+        if (locationField.getText().isBlank()) {
 
-    @FXML
-    private void handleClear() {
+            severityLabel.setText(
+                    "Location is required"
+            );
 
-        cmbDisasterType.setValue(null);
-        txtLocation.clear();
-        txtPeopleAffected.clear();
-        txtDescription.clear();
-    }
-
-    @FXML
-    private void handleBack(ActionEvent event) {
-
-        try {
-
-            Stage stage
-                    = (Stage) ((Node) event.getSource())
-                            .getScene()
-                            .getWindow();
-
-            SceneManager.switchScene(
-                    stage,
-                    "Dashboard.fxml");
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
+            return;
         }
+
+        String disaster = selectedDisasterType;
+        String location = locationField.getText();
+
+        if ("Severe".equals(selectedSeverity)) {
+
+            severityLabel.setText("🔴 HIGH");
+
+            severityStatusLabel.setText(
+                    "Immediate response required • ETA 5 mins"
+            );
+
+            severityCard.setStyle(
+                    "-fx-background-color:#FFEBEE;"
+                    + "-fx-padding:20;"
+                    + "-fx-background-radius:15;"
+                    + "-fx-border-radius:15;"
+                    + "-fx-border-color:#E53935;"
+                    + "-fx-border-width:3;"
+            );
+
+        } else if ("Moderate".equals(selectedSeverity)) {
+
+            severityLabel.setText("🟡 MEDIUM");
+
+            severityStatusLabel.setText(
+                    "Assessment recommended • ETA 15 mins"
+            );
+
+            severityCard.setStyle(
+                    "-fx-background-color:#FFF8E1;"
+                    + "-fx-padding:20;"
+                    + "-fx-background-radius:15;"
+                    + "-fx-border-radius:15;"
+                    + "-fx-border-color:#F9A825;"
+                    + "-fx-border-width:3;"
+            );
+
+        } else if ("Minor".equals(selectedSeverity)) {
+
+            severityLabel.setText("🟢 LOW");
+
+            severityStatusLabel.setText(
+                    "Monitor situation • ETA 30 mins"
+            );
+
+            severityCard.setStyle(
+                    "-fx-background-color:#E8F5E9;"
+                    + "-fx-padding:20;"
+                    + "-fx-background-radius:15;"
+                    + "-fx-border-radius:15;"
+                    + "-fx-border-color:#43A047;"
+                    + "-fx-border-width:3;"
+            );
+
+        } else {
+
+            severityLabel.setText("🟡 MEDIUM");
+
+            severityStatusLabel.setText(
+                    "Auto-detected severity"
+            );
+
+            severityCard.setStyle(
+                    "-fx-background-color:#FFF8E1;"
+                    + "-fx-padding:20;"
+                    + "-fx-background-radius:15;"
+                    + "-fx-border-radius:15;"
+                    + "-fx-border-color:#F9A825;"
+                    + "-fx-border-width:3;"
+            );
+        }
+        switch (disaster) {
+
+            case "Fire":
+
+                impactLabel.setText(
+                        "✓ Buildings\n"
+                        + "✓ Roads\n"
+                        + "✓ Public Transport\n\n"
+                        + "Risk Level: HIGH"
+                );
+
+                break;
+
+            case "Flood":
+
+                impactLabel.setText(
+                        "✓ Roads\n"
+                        + "✓ Drainage Systems\n"
+                        + "✓ Residential Areas\n\n"
+                        + "Risk Level: MEDIUM"
+                );
+
+                break;
+
+            case "Storm":
+
+                impactLabel.setText(
+                        "✓ Power Network\n"
+                        + "✓ Roads\n"
+                        + "✓ Trees & Infrastructure\n\n"
+                        + "Risk Level: MEDIUM"
+                );
+
+                break;
+
+            case "Building Collapse":
+
+                impactLabel.setText(
+                        "✓ Buildings\n"
+                        + "✓ Surrounding Roads\n\n"
+                        + "Risk Level: HIGH"
+                );
+
+                break;
+
+            case "Power Outage":
+
+                impactLabel.setText(
+                        "✓ Electricity Network\n"
+                        + "✓ Traffic Signals\n\n"
+                        + "Risk Level: MEDIUM"
+                );
+
+                break;
+
+            default:
+
+                impactLabel.setText(
+                        "Infrastructure review pending."
+                );
+        }
+        switch (disaster) {
+
+            case "Fire":
+
+                impactLabel.setText(
+                        "✓ Buildings\n"
+                        + "✓ Roads\n"
+                        + "✓ Public Transport\n\n"
+                        + "Risk Level: HIGH"
+                );
+
+                break;
+
+            case "Flood":
+
+                impactLabel.setText(
+                        "✓ Roads\n"
+                        + "✓ Drainage Systems\n"
+                        + "✓ Residential Areas\n\n"
+                        + "Risk Level: MEDIUM"
+                );
+
+                break;
+
+            case "Storm":
+
+                impactLabel.setText(
+                        "✓ Power Network\n"
+                        + "✓ Roads\n"
+                        + "✓ Trees & Infrastructure\n\n"
+                        + "Risk Level: MEDIUM"
+                );
+
+                break;
+
+            case "Building Collapse":
+
+                impactLabel.setText(
+                        "✓ Buildings\n"
+                        + "✓ Surrounding Roads\n\n"
+                        + "Risk Level: HIGH"
+                );
+
+                break;
+
+            case "Power Outage":
+
+                impactLabel.setText(
+                        "✓ Electricity Network\n"
+                        + "✓ Traffic Signals\n\n"
+                        + "Risk Level: MEDIUM"
+                );
+
+                break;
+
+            default:
+
+                impactLabel.setText(
+                        "Infrastructure review pending."
+                );
+        }
+        switch (disaster) {
+
+            case "Fire":
+
+                safetyLabel.setText(
+                        "⚠ Avoid smoke exposure\n\n"
+                        + "🚶 Move to a safe area\n\n"
+                        + "📞 Triple Zero (000)\n\n"
+                        + "🚒 Wait for emergency crews"
+                );
+
+                break;
+
+            case "Flood":
+
+                safetyLabel.setText(
+                        "🌊 Move to higher ground\n\n"
+                        + "🚫 Do not enter floodwater\n\n"
+                        + "📞 Triple Zero (000)"
+                );
+
+                break;
+
+            case "Storm":
+
+                safetyLabel.setText(
+                        "🏠 Stay indoors\n\n"
+                        + "⚡ Avoid power lines\n\n"
+                        + "📞 Triple Zero (000)"
+                );
+
+                break;
+
+            case "Building Collapse":
+
+                safetyLabel.setText(
+                        "🏢 Keep away from structure\n\n"
+                        + "🚧 Follow emergency barriers\n\n"
+                        + "📞 Triple Zero (000)"
+                );
+
+                break;
+
+            default:
+
+                safetyLabel.setText(
+                        "⚠ Follow emergency services advice\n\n"
+                        + "📞 Triple Zero (000)"
+                );
+        }
+        System.out.println(
+                "Incident Submitted: "
+                + selectedDisasterType
+        );
+    }
+
+    @FXML
+    private void handleBack() {
+
+        SceneManager.showCitizenAccess();
     }
 }
