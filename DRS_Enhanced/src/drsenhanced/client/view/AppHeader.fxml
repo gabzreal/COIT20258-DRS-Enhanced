@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="5"
+      style="-fx-background-color: #B71C1C;">
+
+    <padding>
+        <Insets top="15" right="20" bottom="15" left="20"/>
+    </padding>
+
+    <Label text="DRS Enhanced"
+           style="-fx-text-fill:white;
+                  -fx-font-size:24px;
+                  -fx-font-weight:bold;" />
+
+    <Label text="Disaster Response System"
+           style="-fx-text-fill:white;
+                  -fx-font-size:14px;" />
+
+</VBox>
