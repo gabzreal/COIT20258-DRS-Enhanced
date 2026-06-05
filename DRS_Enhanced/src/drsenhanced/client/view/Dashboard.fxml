@@ -3,233 +3,226 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.VBox?>
 
-
-
-<AnchorPane prefHeight="720.0"
-            prefWidth="1280.0"
-            xmlns="http://javafx.com/javafx/21"
+<BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="drsenhanced.client.controller.DashboardController"
-            style="-fx-background-color: linear-gradient(to bottom right, #0f172a, #111827);">
+            prefWidth="1400"
+            prefHeight="850"
+            style="-fx-background-color:#F4F6F8;">
+    <top>
 
-    <children>
+        <VBox>
 
-        <VBox layoutX="0.0"
-              layoutY="0.0"
-              prefWidth="260.0"
-              prefHeight="720.0"
-              spacing="18.0"
-              style="-fx-background-color: linear-gradient(to bottom, #3b0000, #120000);
-                     -fx-border-color: #7f1d1d;
-                     -fx-border-width: 0 2 0 0;">
+            <!-- HEADER -->
 
-            <padding>
-                <Insets top="35.0"
-                        left="20.0"
-                        right="20.0"
-                        bottom="20.0"/>
-            </padding>
+            <HBox spacing="20"
+                  alignment="CENTER"
+                  style="-fx-background-color:#C62828;">
 
-            <Label text="DRS Enhanced"
-                   style="-fx-text-fill: white;
-                          -fx-font-size: 30px;
-                          -fx-font-weight: bold;" />
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
 
-            <Label text="Emergency Response System"
-                   style="-fx-text-fill: #d1d5db;
-                          -fx-font-size: 16px;
-                          -fx-font-weight: bold;" />
-
-            <Region prefHeight="20.0" />
-
-            <Button text="Dashboard"
-                    prefWidth="210.0"
-                    prefHeight="42.0"
-                    style="-fx-background-color: #b30000;
-                           -fx-text-fill: white;
-                           -fx-font-size: 15px;
-                           -fx-font-weight: bold;
-                           -fx-background-radius: 8;" />
-
-            <Button text="Disaster Reports"
-                    prefWidth="210.0"
-                    prefHeight="42.0"
-                    onAction="#openDisasterReport"
-                    style="-fx-background-color: #1f2937;
-                           -fx-text-fill: white;
-                           -fx-font-size: 14px;
-                           -fx-background-radius: 8;" />
-
-            <Button text="Emergency Dispatch"
-                    prefWidth="210.0"
-                    prefHeight="42.0"
-                    onAction="#openEmergencyDispatch"
-                    style="-fx-background-color: #1f2937;
-                           -fx-text-fill: white;
-                           -fx-font-size: 14px;
-                           -fx-background-radius: 8;" />
-
-            <Button text="Hospital Management"
-                    prefWidth="210.0"
-                    prefHeight="42.0"
-                    onAction="#openHospitalManagement"
-                    style="-fx-background-color: #1f2937;
-                           -fx-text-fill: white;
-                           -fx-font-size: 14px;
-                           -fx-background-radius: 8;" />
-
-            <Button text="Alert Center"
-                    prefWidth="210.0"
-                    prefHeight="42.0"
-                    onAction="#openAlertCenter"
-                    style="-fx-background-color: #1f2937;
-                           -fx-text-fill: white;
-                           -fx-font-size: 14px;
-                           -fx-background-radius: 8;" />
-
-            <Button text="Refresh Dashboard"
-                    prefWidth="210.0"
-                    prefHeight="42.0"
-                    onAction="#refreshDashboard"
-                    style="-fx-background-color: #047857;
-                           -fx-text-fill: white;
-                           -fx-font-size: 14px;
-                           -fx-font-weight: bold;
-                           -fx-background-radius: 8;" />
-
-            <Button text="Logout"
-                    prefWidth="210.0"
-                    prefHeight="42.0"
-                    onAction="#handleLogout"
-                    style="-fx-background-color: #991b1b;
-                           -fx-text-fill: white;
-                           -fx-font-size: 14px;
-                           -fx-font-weight: bold;
-                           -fx-background-radius: 8;" />
-
-            <Region prefHeight="60.0" />
-
-            <Label text="✔ Emergency Services Active"
-                   style="-fx-text-fill: #22c55e;
-                          -fx-font-size: 14px;
-                          -fx-font-weight: bold;" />
-
-            <Label text="✔ Secure Communication Enabled"
-                   style="-fx-text-fill: #22c55e;
-                          -fx-font-size: 14px;
-                          -fx-font-weight: bold;" />
-
-            <Label text="✔ Disaster Monitoring Online"
-                   style="-fx-text-fill: #22c55e;
-                          -fx-font-size: 14px;
-                          -fx-font-weight: bold;" />
-
-        </VBox>
-
-        <VBox layoutX="290.0"
-              layoutY="30.0"
-              spacing="28.0">
-
-            <Label text="Emergency Operations Dashboard"
-                   style="-fx-text-fill: white;
-                          -fx-font-size: 34px;
-                          -fx-font-weight: bold;" />
-
-            <Label text="Real-Time Disaster Coordination and Monitoring"
-                   style="-fx-text-fill: #d1d5db;
-                          -fx-font-size: 16px;" />
-
-            <HBox spacing="22.0">
-
-                <VBox prefWidth="220.0"
-                      prefHeight="130.0"
-                      spacing="12.0"
-                      style="-fx-background-color: linear-gradient(to bottom right, #b30000, #7f0000);
-                             -fx-background-radius: 15;
-                             -fx-padding: 18;">
-
-                    <Label text="Active Incidents"
-                           style="-fx-text-fill: white;
-                                  -fx-font-size: 18px;
-                                  -fx-font-weight: bold;" />
-
-                    <Label fx:id="activeIncidentsLabel"
-                           text="0"
-                           style="-fx-text-fill: white;
-                                  -fx-font-size: 42px;
-                                  -fx-font-weight: bold;" />
-
-                </VBox>
-
-                <VBox prefWidth="220.0"
-                      prefHeight="130.0"
-                      spacing="12.0"
-                      style="-fx-background-color: linear-gradient(to bottom right, #dc2626, #7f1d1d);
-                             -fx-background-radius: 15;
-                             -fx-padding: 18;">
-
-                    <Label text="Critical Cases"
-                           style="-fx-text-fill: white;
-                                  -fx-font-size: 18px;
-                                  -fx-font-weight: bold;" />
-
-                    <Label fx:id="criticalCasesLabel"
-                           text="0"
-                           style="-fx-text-fill: white;
-                                  -fx-font-size: 42px;
-                                  -fx-font-weight: bold;" />
-
-                </VBox>
-
-                <VBox prefWidth="220.0"
-                      prefHeight="130.0"
-                      spacing="12.0"
-                      style="-fx-background-color: linear-gradient(to bottom right, #047857, #064e3b);
-                             -fx-background-radius: 15;
-                             -fx-padding: 18;">
-
-                    <Label text="Available Teams"
-                           style="-fx-text-fill: white;
-                                  -fx-font-size: 18px;
-                                  -fx-font-weight: bold;" />
-
-                    <Label fx:id="availableTeamsLabel"
-                           text="0"
-                           style="-fx-text-fill: white;
-                                  -fx-font-size: 42px;
-                                  -fx-font-weight: bold;" />
-
-                </VBox>
-
-                <VBox prefWidth="220.0"
-                      prefHeight="130.0"
-                      spacing="12.0"
-                      style="-fx-background-color: linear-gradient(to bottom right, #1d4ed8, #1e3a8a);
-                             -fx-background-radius: 15;
-                             -fx-padding: 18;">
-
-                    <Label text="Hospital Beds"
-                           style="-fx-text-fill: white;
-                                  -fx-font-size: 18px;
-                                  -fx-font-weight: bold;" />
-
-                    <Label fx:id="hospitalBedsLabel"
-                           text="0"
-                           style="-fx-text-fill: white;
-                                  -fx-font-size: 42px;
-                                  -fx-font-weight: bold;" />
-
-                </VBox>
+                <Label text="🚨 Disaster Response System"
+                       style="-fx-text-fill:white;
+                              -fx-font-size:30;
+                              -fx-font-weight:bold;"/>
 
             </HBox>
 
         </VBox>
 
-    </children>
+    </top>
 
-</AnchorPane>
+    <center>
+
+        <VBox spacing="25">
+
+            <padding>
+                <Insets top="30" right="40" bottom="30" left="40"/>
+            </padding>
+
+            <!-- SUBTITLE -->
+
+            <VBox spacing="10"
+                  alignment="CENTER">
+
+                <Label text="Welcome to Victoria's Emergency Response Platform"
+                       style="
+                -fx-font-size:30;
+                -fx-font-weight:bold;
+                -fx-text-fill:#263238;
+           "/>
+
+                <Label text="Real-time disaster reporting, coordination and emergency response across Melbourne"
+                       wrapText="true"
+                       style="
+                -fx-font-size:16;
+                -fx-text-fill:#607D8B;
+           "/>
+
+            </VBox>
+
+            <!-- MAIN ACTION BUTTONS -->
+
+            <HBox spacing="25"
+                  alignment="CENTER">
+
+                <Button text="👤 Continue as Citizen"
+                        prefWidth="260"
+                        prefHeight="70"
+                        onAction="#handleCitizen"
+                        style="
+                            -fx-background-color:#1976D2;
+                            -fx-text-fill:white;
+                            -fx-font-size:16;
+                            -fx-font-weight:bold;
+                            -fx-background-radius:10;
+                            -fx-cursor:hand;
+                        "/>
+
+                <Button text="🎯 Continue as City Manager"
+                        prefWidth="260"
+                        prefHeight="70"
+                        onAction="#handleManager"
+                        style="
+                            -fx-background-color:#2E7D32;
+                            -fx-text-fill:white;
+                            -fx-font-size:16;
+                            -fx-font-weight:bold;
+                            -fx-background-radius:10;
+                            -fx-cursor:hand;
+                        "/>
+
+                <Button text="🚒 Continue as Emergency Worker"
+                        prefWidth="280"
+                        prefHeight="70"
+                        onAction="#handleWorker"
+                        style="
+                            -fx-background-color:#EF6C00;
+                            -fx-text-fill:white;
+                            -fx-font-size:16;
+                            -fx-font-weight:bold;
+                            -fx-background-radius:10;
+                            -fx-cursor:hand;
+                        "/>
+
+            </HBox>
+
+            <!-- LIVE SYSTEM STATUS -->
+
+            <HBox spacing="20">
+
+                <VBox prefWidth="250"
+                      spacing="10"
+                      style="
+                          -fx-background-color:white;
+                          -fx-background-radius:10;
+                          -fx-padding:20;
+                          -fx-border-color:#E0E0E0;
+                          -fx-border-radius:10;
+                      ">
+
+                    <Label text="ACTIVE INCIDENTS"
+                           style="-fx-font-weight:bold;
+                                  -fx-font-size:14;"/>
+
+                    <Label text="12"
+                           style="-fx-font-size:36;
+                                  -fx-font-weight:bold;
+                                  -fx-text-fill:#C62828;"/>
+
+                </VBox>
+
+                <VBox prefWidth="250"
+                      spacing="10"
+                      style="
+                          -fx-background-color:white;
+                          -fx-background-radius:10;
+                          -fx-padding:20;
+                          -fx-border-color:#E0E0E0;
+                          -fx-border-radius:10;
+                      ">
+
+                    <Label text="CRITICAL INCIDENTS"
+                           style="-fx-font-weight:bold;
+                                  -fx-font-size:14;"/>
+
+                    <Label text="3"
+                           style="-fx-font-size:36;
+                                  -fx-font-weight:bold;
+                                  -fx-text-fill:#D84315;"/>
+
+                </VBox>
+
+                <VBox prefWidth="250"
+                      spacing="10"
+                      style="
+                          -fx-background-color:white;
+                          -fx-background-radius:10;
+                          -fx-padding:20;
+                          -fx-border-color:#E0E0E0;
+                          -fx-border-radius:10;
+                      ">
+
+                    <Label text="RESPONSES TODAY"
+                           style="-fx-font-weight:bold;
+                                  -fx-font-size:14;"/>
+
+                    <Label text="27"
+                           style="-fx-font-size:36;
+                                  -fx-font-weight:bold;
+                                  -fx-text-fill:#2E7D32;"/>
+
+                </VBox>
+
+            </HBox>
+
+            <!-- ACTIVE ALERTS -->
+
+            <VBox spacing="10"
+                  VBox.vgrow="ALWAYS"
+                  style="
+                      -fx-background-color:white;
+                      -fx-background-radius:10;
+                      -fx-padding:20;
+                      -fx-border-color:#E0E0E0;
+                      -fx-border-radius:10;
+                  ">
+
+                <Label text="📢 Active Alerts"
+                       style="-fx-font-size:20;
+                              -fx-font-weight:bold;"/>
+
+                <ListView fx:id="alertsList"
+                          prefHeight="250"/>
+
+            </VBox>
+
+        </VBox>
+
+    </center>
+
+    <bottom>
+
+        <HBox alignment="CENTER_RIGHT"
+              style="-fx-background-color:#ECEFF1;">
+
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+
+            <Label text="DRS Enhanced v1.0"
+                   style="-fx-text-fill:#616161;"/>
+
+        </HBox>
+
+    </bottom>
+
+</BorderPane>

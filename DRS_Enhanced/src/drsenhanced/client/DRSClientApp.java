@@ -4,27 +4,18 @@
  */
 package drsenhanced.client;
 
+import drsenhanced.util.SceneManager;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class DRSClientApp extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
 
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource(
-                        "/drsenhanced/client/view/LoginView.fxml"
-                )
-        );
+        SceneManager.setPrimaryStage(stage);
 
-        Scene scene = new Scene(loader.load());
-
-        stage.setTitle("DRS Enhanced");
-        stage.setScene(scene);
-        stage.show();
+        SceneManager.showDashboard();
     }
 
     public static void main(String[] args) {
