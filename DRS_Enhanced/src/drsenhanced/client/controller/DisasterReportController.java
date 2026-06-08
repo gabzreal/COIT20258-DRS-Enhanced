@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
 package drsenhanced.client.controller;
-
+/**
+ * DisasterReportController manages disaster report
+ * creation, submission, and incident reporting.
+ *
+ * @author Krishna Kakani - 12279867
+ */
 import drsenhanced.util.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;

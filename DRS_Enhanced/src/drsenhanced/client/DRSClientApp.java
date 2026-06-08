@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package drsenhanced.client;
-
+/**
+ * DRSClientApp launches the Disaster Response System
+ * client application and initializes the primary stage.
+ *
+ * @author Krishna Kakani - 12279867
+ */
 import drsenhanced.util.SceneManager;
 import javafx.application.Application;
 import javafx.stage.Stage;

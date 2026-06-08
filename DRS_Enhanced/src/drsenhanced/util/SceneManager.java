@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package drsenhanced.util;
-
+/**
+ * SceneManager controls application navigation and
+ * handles scene transitions between system views.
+ *
+ * @author Krishna Kakani -12279867
+ */
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -207,6 +212,24 @@ public final class SceneManager {
                 "/drsenhanced/client/view/InfrastructureImpactView.fxml",
                 "Infrastructure Impact Analysis"
         );
+    }
+
+    public static void showEmergencyWorkerLogin() {
+
+        switchScene(
+                "/drsenhanced/client/view/EmergencyWorkerLoginView.fxml",
+                "Emergency Worker Portal"
+        );
+
+    }
+
+    public static void showEmergencyWorkerDashboard() {
+
+        switchScene(
+                "/drsenhanced/client/view/EmergencyWorkerDashboardView.fxml",
+                "Emergency Worker Dashboard"
+        );
+
     }
 
     // ==================================================
