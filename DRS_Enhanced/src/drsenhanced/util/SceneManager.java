@@ -3,9 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package drsenhanced.util;
+
 /**
- * SceneManager controls application navigation and
- * handles scene transitions between system views.
+ * SceneManager controls application navigation and handles scene transitions
+ * between system views.
  *
  * @author Krishna Kakani -12279867
  */
@@ -152,6 +153,15 @@ public final class SceneManager {
                 "/drsenhanced/client/view/CoordinationView.fxml",
                 "Disaster Command Centre"
         );
+    }
+
+    public static void showCityManagerLogin() {
+
+        switchScene(
+                "/drsenhanced/client/view/CityManagerLoginView.fxml",
+                "City Manager Login"
+        );
+
     }
 
     public static void showCityManagerDashboard() {

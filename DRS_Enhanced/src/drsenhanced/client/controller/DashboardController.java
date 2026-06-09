@@ -1,9 +1,8 @@
 package drsenhanced.client.controller;
 
 /**
- * DashboardController manages role selection and navigation
- * to different system modules including Citizen,
- * Emergency Worker, and City Manager portals.
+ * DashboardController manages role selection and navigation to different system
+ * modules including Citizen, Emergency Worker, and City Manager portals.
  *
  * @author Krishna Kakani - 12279867
  */
@@ -36,7 +35,8 @@ public class DashboardController {
     @FXML
     private void handleManager() {
 
-        SceneManager.showCityManagerDashboard();
+        SceneManager.showCityManagerLogin();
+
     }
 
     @FXML
@@ -45,4 +45,5 @@ public class DashboardController {
         SceneManager.showEmergencyWorkerLogin();
 
     }
+
 }
