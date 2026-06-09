@@ -8,6 +8,6 @@ package drsenhanced.service;
  *
  * @author Hajera Begum Shaik -  12281382
  */
-public class ShelterService {
+public class AuthenticationService {
     
 }
