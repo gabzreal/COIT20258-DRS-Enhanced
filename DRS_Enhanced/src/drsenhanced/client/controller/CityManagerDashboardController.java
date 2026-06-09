@@ -5,9 +5,8 @@
 package drsenhanced.client.controller;
 
 /**
- * CityManagerDashboardController provides operational
- * monitoring of active incidents, resource capacity,
- * emergency shelters, and response activities.
+ * CityManagerDashboardController provides operational monitoring of active
+ * incidents, resource capacity, emergency shelters, and response activities.
  *
  * @author Krishna Kakani - 12279867
  */
@@ -58,5 +57,12 @@ public class CityManagerDashboardController {
     private void handleBack() {
 
         SceneManager.showDashboard();
+    }
+
+    @FXML
+    private void handleLogout() {
+
+        SceneManager.showCityManagerLogin();
+
     }
 }
