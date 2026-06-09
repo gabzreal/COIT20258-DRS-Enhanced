@@ -5,17 +5,28 @@
 package drsenhanced.service;
 
 /**
+ * Handles resource dispatch operations.
  *
- * @author Hajera Begum Shaik -  12281382
+ * Supports assigning resources and requesting
+ * additional support during emergencies.
+ *
+ * @author Hajera Begum Shaik - 12281382
  */
 public class DispatchService {
     
+    /**
+     * Assigns resources to an incident.
+     */
+    
     public void assignResources() {
 
-}
+      }
+    /**
+     * Requests additional emergency support.
+     */
 
-public void requestSupport() {
+      public void requestSupport() {
 
-}
+       }
     
 }

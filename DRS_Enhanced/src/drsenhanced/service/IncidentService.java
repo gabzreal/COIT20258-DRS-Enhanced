@@ -5,21 +5,34 @@
 package drsenhanced.service;
 
 /**
+ * Manages disaster incidents within the DRS.
  *
- * @author Hajera Begum Shaik -  12281382
+ * Responsible for creating incidents, retrieving
+ * incident information, and updating incident status.
+ *
+ * @author Hajera Begum Shaik - 12281382
  */
 public class IncidentService {
+    
+    /**
+     * Creates a new incident record.
+     */
     
     public void createIncident() {
 
 }
+    /**
+     * Retrieves available incidents.
+     */
 
-public void getIncidents() {
+     public void getIncidents() {
 
-}
+     }
+     /**
+     * Updates the status of an incident.
+     */
+     public void updateIncidentStatus() {
 
-public void updateIncidentStatus() {
-
-}
+    }
     
 }

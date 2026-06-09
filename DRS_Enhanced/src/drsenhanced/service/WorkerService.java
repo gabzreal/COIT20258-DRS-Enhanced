@@ -5,17 +5,28 @@
 package drsenhanced.service;
 
 /**
+ * Manages emergency worker operations.
  *
- * @author Hajera Begum Shaik -  12281382
+ * Responsible for mission assignments and
+ * worker status updates.
+ *
+ * @author Hajera Begum Shaik - 12281382
  */
 public class WorkerService {
     
+    /**
+     * Assigns a mission to an emergency worker.
+     */
+    
     public void assignMission() {
 
-}
+    }
+    /**
+     * Records a worker status update.
+     */
 
-public void submitStatusUpdate() {
+       public void submitStatusUpdate() {
 
-}
+        }
     
 }

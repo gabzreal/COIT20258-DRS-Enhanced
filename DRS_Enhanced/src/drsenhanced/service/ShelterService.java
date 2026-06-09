@@ -5,17 +5,26 @@
 package drsenhanced.service;
 
 /**
+ * Manages shelter information and capacity.
  *
- * @author Hajera Begum Shaik -  12281382
+ * Supports shelter retrieval and occupancy updates.
+ *
+ * @author Hajera Begum Shaik - 12281382
  */
 public class ShelterService {
     
+    /**
+     * Retrieves shelter information.
+     */
     public void getShelters() {
 
-}
+    }
+    /**
+     * Updates shelter occupancy or capacity.
+     */
 
-public void updateCapacity() {
+      public void updateCapacity() {
 
-}
+      }
     
 }

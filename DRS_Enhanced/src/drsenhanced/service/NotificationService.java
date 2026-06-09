@@ -5,17 +5,28 @@
 package drsenhanced.service;
 
 /**
+ * Handles system notifications.
  *
- * @author Hajera Begum Shaik -  12281382
+ * Responsible for sending and retrieving
+ * notifications for users.
+ *
+ * @author Hajera Begum Shaik - 12281382
  */
 public class NotificationService {
     
+    /**
+     * Sends a notification to a user.
+     */
+    
     public void sendNotification() {
 
-}
+    }
+    /**
+     * Retrieves available notifications.
+     */
 
-public void getNotifications() {
+    public void getNotifications() {
 
-}
+    }
     
 }
