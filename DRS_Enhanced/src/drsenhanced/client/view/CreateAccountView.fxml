@@ -1,0 +1,97 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="drsenhanced.client.controller.CreateAccountController"
+            style="-fx-background-color:#F4F6F8;">
+
+    <top>
+
+        <HBox alignment="CENTER"
+              style="-fx-background-color:#2E7D32;">
+
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Create Citizen Account"
+                   style="
+                        -fx-text-fill:white;
+                        -fx-font-size:28;
+                        -fx-font-weight:bold;
+                   "/>
+
+        </HBox>
+
+    </top>
+
+    <center>
+
+        <VBox spacing="15"
+              maxWidth="700"
+              alignment="CENTER">
+
+            <padding>
+                <Insets top="30" right="50" bottom="30" left="50"/>
+            </padding>
+
+            <Label text="Personal Information"
+                   style="
+                        -fx-font-size:22;
+                        -fx-font-weight:bold;
+                   "/>
+
+            <TextField fx:id="fullNameField"
+                       promptText="Full Name"/>
+
+            <TextField fx:id="emailField"
+                       promptText="Email Address"/>
+
+            <TextField fx:id="phoneField"
+                       promptText="Phone Number"/>
+
+            <ComboBox fx:id="suburbCombo"
+                      promptText="Select Melbourne Suburb"/>
+
+            <PasswordField fx:id="passwordField"
+                           promptText="Password"/>
+
+            <PasswordField fx:id="confirmPasswordField"
+                           promptText="Confirm Password"/>
+
+            <Button text="CREATE ACCOUNT"
+                    prefHeight="50"
+                    prefWidth="250"
+                    onAction="#handleCreateAccount"
+                    style="
+                        -fx-background-color:#2E7D32;
+                        -fx-text-fill:white;
+                        -fx-font-size:16;
+                        -fx-font-weight:bold;
+                    "/>
+
+        </VBox>
+
+    </center>
+
+    <bottom>
+
+        <HBox alignment="CENTER_LEFT">
+
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+
+            <Button text="⬅ Back"
+                    onAction="#handleBack"/>
+
+        </HBox>
+
+    </bottom>
+
+</BorderPane>
