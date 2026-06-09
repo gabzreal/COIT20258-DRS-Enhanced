@@ -10,4 +10,12 @@ package drsenhanced.service;
  */
 public class CitizenService {
     
+    public void submitReport() {
+
+}
+
+public void viewReports() {
+
+}
+    
 }

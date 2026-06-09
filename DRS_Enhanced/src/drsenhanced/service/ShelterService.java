@@ -10,4 +10,12 @@ package drsenhanced.service;
  */
 public class ShelterService {
     
+    public void getShelters() {
+
+}
+
+public void updateCapacity() {
+
+}
+    
 }

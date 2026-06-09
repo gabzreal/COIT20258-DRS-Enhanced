@@ -10,4 +10,12 @@ package drsenhanced.service;
  */
 public class NotificationService {
     
+    public void sendNotification() {
+
+}
+
+public void getNotifications() {
+
+}
+    
 }

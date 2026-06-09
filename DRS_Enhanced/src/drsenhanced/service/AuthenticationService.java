@@ -10,4 +10,12 @@ package drsenhanced.service;
  */
 public class AuthenticationService {
     
+    public boolean login(String username, String password) {
+    return false;
+}
+
+public void logout() {
+
+}
+    
 }

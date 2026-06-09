@@ -10,4 +10,16 @@ package drsenhanced.service;
  */
 public class IncidentService {
     
+    public void createIncident() {
+
+}
+
+public void getIncidents() {
+
+}
+
+public void updateIncidentStatus() {
+
+}
+    
 }

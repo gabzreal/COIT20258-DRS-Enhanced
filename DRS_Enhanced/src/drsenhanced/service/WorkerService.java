@@ -10,4 +10,12 @@ package drsenhanced.service;
  */
 public class WorkerService {
     
+    public void assignMission() {
+
+}
+
+public void submitStatusUpdate() {
+
+}
+    
 }

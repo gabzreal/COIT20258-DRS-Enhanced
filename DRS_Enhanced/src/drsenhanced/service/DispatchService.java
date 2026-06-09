@@ -10,4 +10,12 @@ package drsenhanced.service;
  */
 public class DispatchService {
     
+    public void assignResources() {
+
+}
+
+public void requestSupport() {
+
+}
+    
 }
