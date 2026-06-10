@@ -100,11 +100,13 @@
 
                 <!-- Back Button -->
 
-                <Button text="⬅ Back"
-                        onAction="#handleBack"
-                        prefWidth="110"
-                        prefHeight="42"
-                        style="
+                <HBox spacing="10">
+
+                    <Button text="⬅ Back"
+                            onAction="#handleBack"
+                            prefWidth="110"
+                            prefHeight="42"
+                            style="
                 -fx-background-color:#757575;
                 -fx-text-fill:white;
                 -fx-font-size:15;
@@ -112,81 +114,228 @@
                 -fx-background-radius:10;
             "/>
 
+                    <Button text="🚪 Logout"
+                            onAction="#handleLogout"
+                            prefWidth="110"
+                            prefHeight="42"
+                            style="
+                -fx-background-color:#D32F2F;
+                -fx-text-fill:white;
+                -fx-font-size:15;
+                -fx-font-weight:bold;
+                -fx-background-radius:10;
+            "/>
+
+                </HBox>
+
             </HBox>
 
             <!-- STATS -->
 
             <HBox spacing="20">
 
-                <VBox prefWidth="150"
-                      style="
-                            -fx-background-color:white;
-                            -fx-padding:12;
-                            -fx-background-radius:12;
-                            -fx-border-radius:12;
-                            -fx-border-color:#E0E0E0;
-                      ">
+                <VBox prefWidth="160"
+                      style="-fx-background-color:white;
+                 -fx-padding:12;
+                 -fx-background-radius:12;
+                 -fx-border-radius:12;
+                 -fx-border-color:#E0E0E0;">
 
                     <Label text="ACTIVE INCIDENTS"
                            style="-fx-font-weight:bold;"/>
 
                     <Label text="12"
-                           style="
-                                -fx-font-size:25;
-                                -fx-font-weight:bold;
-                                -fx-text-fill:#C62828;
-                           "/>
-
+                           style="-fx-font-size:25;
+                      -fx-font-weight:bold;
+                      -fx-text-fill:#C62828;"/>
                 </VBox>
 
-                <VBox prefWidth="150"
-                      style="
-                            -fx-background-color:white;
-                            -fx-padding:12;
-                            -fx-background-radius:12;
-                            -fx-border-radius:12;
-                            -fx-border-color:#E0E0E0;
-                      ">
+                <VBox prefWidth="160"
+                      style="-fx-background-color:white;
+                 -fx-padding:12;
+                 -fx-background-radius:12;
+                 -fx-border-radius:12;
+                 -fx-border-color:#E0E0E0;">
 
                     <Label text="CRITICAL"
                            style="-fx-font-weight:bold;"/>
 
                     <Label text="3"
-                           style="
-                                -fx-font-size:25;
-                                -fx-font-weight:bold;
-                                -fx-text-fill:#E65100;
-                           "/>
-
+                           style="-fx-font-size:25;
+                      -fx-font-weight:bold;
+                      -fx-text-fill:#E65100;"/>
                 </VBox>
 
-                <VBox prefWidth="150"
-                      style="
-                            -fx-background-color:white;
-                            -fx-padding:12;
-                            -fx-background-radius:12;
-                            -fx-border-radius:12;
-                            -fx-border-color:#E0E0E0;
-                      ">
+                <VBox prefWidth="160"
+                      style="-fx-background-color:white;
+                 -fx-padding:12;
+                 -fx-background-radius:12;
+                 -fx-border-radius:12;
+                 -fx-border-color:#E0E0E0;">
 
                     <Label text="UNITS DEPLOYED"
                            style="-fx-font-weight:bold;"/>
 
                     <Label text="18"
-                           style="
-                                -fx-font-size:25;
-                                -fx-font-weight:bold;
-                                -fx-text-fill:#2E7D32;
-                           "/>
-
+                           style="-fx-font-size:25;
+                      -fx-font-weight:bold;
+                      -fx-text-fill:#2E7D32;"/>
                 </VBox>
-                
-            
 
-                
-                
+                <VBox prefWidth="160"
+                      style="-fx-background-color:white;
+                 -fx-padding:12;
+                 -fx-background-radius:12;
+                 -fx-border-radius:12;
+                 -fx-border-color:#E0E0E0;">
+
+                    <Label text="AVAILABLE SHELTERS"
+                           style="-fx-font-weight:bold;"/>
+
+                    <Label text="14"
+                           style="-fx-font-size:25;
+                      -fx-font-weight:bold;
+                      -fx-text-fill:#1976D2;"/>
+                </VBox>
 
             </HBox>
+
+            <!-- OPERATIONS DASHBOARD -->
+
+            <HBox spacing="20">
+
+                <!-- INCIDENT QUEUE -->
+
+                <VBox spacing="10"
+                      prefWidth="750"
+                      style="
+                -fx-background-color:white;
+                -fx-padding:20;
+                -fx-background-radius:12;
+                -fx-border-radius:12;
+                -fx-border-color:#E0E0E0;
+          ">
+
+                    <Label text="🚨 Active Incident Queue"
+                           style="
+                    -fx-font-size:20;
+                    -fx-font-weight:bold;
+               "/>
+
+                    <ListView fx:id="incidentList"
+                              prefHeight="450"/>
+
+                    <Button text="🔍 Open Selected Incident"
+                            onAction="#handleOpenIncident"
+                            prefWidth="250"
+                            prefHeight="50"
+                            style="
+                    -fx-background-color:#1976D2;
+                    -fx-text-fill:white;
+                    -fx-font-size:18;
+                    -fx-font-weight:bold;
+                    -fx-background-radius:10;
+                "/>
+
+                </VBox>
+
+                <!-- RIGHT SIDE PANELS -->
+
+               
+
+                <HBox spacing="15">
+
+                    <!-- COLUMN 1 -->
+
+                    <VBox spacing="15" prefWidth="280">
+
+                        <!-- DEPARTMENT -->
+
+                        <VBox spacing="10"
+                              style="
+            -fx-background-color:white;
+            -fx-padding:20;
+            -fx-background-radius:12;
+            -fx-border-radius:12;
+            -fx-border-color:#E0E0E0;">
+
+                            <Label text="🚓 Department Status"
+                                   style="-fx-font-size:18; -fx-font-weight:bold;"/>
+
+                            <Label text="🚒 Fire Services - Available"/>
+                            <Label text="🚑 Ambulance Victoria - Busy"/>
+                            <Label text="👮 Victoria Police - Available"/>
+                            <Label text="🌊 SES Victoria - Available"/>
+
+                        </VBox>
+
+                        <!-- SHELTER -->
+
+                        <VBox spacing="10"
+                              style="
+            -fx-background-color:white;
+            -fx-padding:20;
+            -fx-background-radius:12;
+            -fx-border-radius:12;
+            -fx-border-color:#E0E0E0;">
+
+                            <Label text="🏠 Shelter Capacity"
+                                   style="-fx-font-size:18; -fx-font-weight:bold;"/>
+
+                            <Label text="Town Hall Shelter : 120 / 200"/>
+                            <Label text="Docklands Shelter : 80 / 150"/>
+                            <Label text="Carlton Hall : 60 / 100"/>
+
+                        </VBox>
+
+                        <!-- WEATHER -->
+
+                        <VBox spacing="10"
+                              style="
+            -fx-background-color:#FFF8E1;
+            -fx-padding:20;
+            -fx-background-radius:12;
+            -fx-border-radius:12;
+            -fx-border-color:#FFE082;">
+
+                            <Label text="🌦 Weather &amp; Risk Forecast"
+                                   style="-fx-font-size:18; -fx-font-weight:bold;"/>
+
+                            <Label text="Heavy Rain Expected: 4:00 PM"/>
+                            <Label text="Flood Risk: Medium"/>
+                            <Label text="Wind Speed: 45 km/h"/>
+                            <Label text="Temperature: 11°C"/>
+
+                        </VBox>
+
+                    </VBox>
+
+                    <!-- COLUMN 2 -->
+
+                    <VBox spacing="15" prefWidth="280">
+
+                        <VBox spacing="10"
+                              style="
+        -fx-background-color:white;
+        -fx-padding:20;
+        -fx-background-radius:12;
+        -fx-border-radius:12;
+        -fx-border-color:#E0E0E0;">
+
+                            <Label text="📝 Recent Response Activity"
+                                   style="-fx-font-size:18; -fx-font-weight:bold;"/>
+
+                            <ListView fx:id="responseLogList"
+                                      prefHeight="450"/>
+
+                        </VBox>
+
+                    </VBox>
+
+                </HBox> 
+            </HBox>
+
+
             <VBox spacing="5"
                   style="
             -fx-background-color:white;
@@ -276,47 +425,7 @@
 
             </VBox>
 
-            <!-- INCIDENTS + MAP -->
-
-            <HBox spacing="20">
-
-                <VBox spacing="10"
-                      prefWidth="650"
-                      style="
-                            -fx-background-color:white;
-                            -fx-padding:20;
-                            -fx-background-radius:12;
-                            -fx-border-radius:12;
-                            -fx-border-color:#E0E0E0;
-                      ">
-
-                    <Label text="🚨 Active Incident Queue"
-                           style="
-                                -fx-font-size:20;
-                                -fx-font-weight:bold;
-                           "/>
-
-                    <ListView fx:id="incidentList"
-                              prefHeight="500"/>
-                    <Button text="🔍 Open Selected Incident"
-                            onAction="#handleOpenIncident"
-                            prefWidth="250"
-                            prefHeight="50"
-                            style="
-            -fx-background-color:#1976D2;
-            -fx-text-fill:white;
-            -fx-font-size:18;
-            -fx-font-weight:bold;
-            -fx-background-radius:10;
-        "/>
-
-                </VBox>
-
-                
-                
-       
-
-            </HBox>
+            
 
         </VBox>
 

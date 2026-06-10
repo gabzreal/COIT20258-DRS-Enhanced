@@ -2,12 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -19,7 +22,7 @@
     <top>
 
         <HBox alignment="CENTER_LEFT"
-              spacing="20"
+              spacing="15"
               style="-fx-background-color:#1976D2;">
 
             <padding>
@@ -28,10 +31,32 @@
 
             <Label text="👤 Citizen Dashboard"
                    style="
-                        -fx-text-fill:white;
-                        -fx-font-size:28;
-                        -fx-font-weight:bold;
-                   "/>
+                    -fx-text-fill:white;
+                    -fx-font-size:28;
+                    -fx-font-weight:bold;
+               "/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="⬅ Back"
+                    onAction="#handleBack"
+                    prefWidth="110"
+                    style="
+                    -fx-background-color:#757575;
+                    -fx-text-fill:white;
+                    -fx-font-weight:bold;
+                    -fx-background-radius:8;
+                "/>
+
+            <Button text="Logout"
+                    onAction="#handleLogout"
+                    prefWidth="110"
+                    style="
+                    -fx-background-color:#D32F2F;
+                    -fx-text-fill:white;
+                    -fx-font-weight:bold;
+                    -fx-background-radius:8;
+                "/>
 
         </HBox>
 
@@ -52,106 +77,137 @@
             <VBox GridPane.rowIndex="0"
                   GridPane.columnIndex="0"
                   spacing="10"
-                  prefWidth="500"
-                  style="
-                    -fx-background-color:white;
-                    -fx-padding:20;
-                    -fx-background-radius:10;
-                  ">
+                  prefWidth="350"
+                  style="-fx-background-color:white;
+                         -fx-padding:20;
+                         -fx-background-radius:10;">
 
                 <Label text="📄 My Disaster Reports"
-                       style="
-                            -fx-font-size:20;
-                            -fx-font-weight:bold;
-                       "/>
+                       style="-fx-font-size:20;
+                              -fx-font-weight:bold;"/>
 
                 <ListView fx:id="reportList"
-                          prefHeight="250"/>
+                          prefHeight="220"/>
+
+                <Button text="🚨 Report Disaster"
+                        onAction="#handleReportDisaster"
+                        prefWidth="180"
+                        style="-fx-background-color:#D32F2F;
+                               -fx-text-fill:white;
+                               -fx-font-weight:bold;"/>
 
             </VBox>
 
-            <!-- NOTIFICATIONS -->
+            <!-- LIVE INCIDENTS -->
 
             <VBox GridPane.rowIndex="0"
                   GridPane.columnIndex="1"
                   spacing="10"
-                  prefWidth="500"
-                  style="
-                    -fx-background-color:white;
-                    -fx-padding:20;
-                    -fx-background-radius:10;
-                  ">
+                  prefWidth="350"
+                  style="-fx-background-color:white;
+                         -fx-padding:20;
+                         -fx-background-radius:10;">
 
-                <Label text="📢 Emergency Notifications"
-                       style="
-                            -fx-font-size:20;
-                            -fx-font-weight:bold;
-                       "/>
+                <Label text="📢 Live Incident Updates"
+                       style="-fx-font-size:20;
+                              -fx-font-weight:bold;"/>
 
-                <ListView fx:id="notificationList"
+                <ListView fx:id="incidentList"
                           prefHeight="250"/>
 
             </VBox>
 
-            <!-- STATUS TRACKER -->
+            <!-- SAFETY GUIDE -->
+
+            <VBox GridPane.rowIndex="0"
+                  GridPane.columnIndex="2"
+                  spacing="10"
+                  prefWidth="350"
+                  style="-fx-background-color:white;
+                         -fx-padding:20;
+                         -fx-background-radius:10;">
+
+                <Label text="🛡 Safety Guide"
+                       style="-fx-font-size:20;
+                              -fx-font-weight:bold;"/>
+
+                <ComboBox fx:id="guideType"
+                          prefWidth="250"/>
+
+                <Label fx:id="guideText"
+                       wrapText="true"
+                       prefWidth="300"
+                       style="-fx-font-size:13;"/>
+
+            </VBox>
+
+            <!-- EMERGENCY CONTACTS -->
 
             <VBox GridPane.rowIndex="1"
                   GridPane.columnIndex="0"
                   spacing="10"
-                  prefWidth="500"
-                  style="
-                    -fx-background-color:white;
-                    -fx-padding:20;
-                    -fx-background-radius:10;
-                  ">
+                  prefWidth="350"
+                  style="-fx-background-color:white;
+                         -fx-padding:20;
+                         -fx-background-radius:10;">
 
-                <Label text="🚒 Response Status Timeline"
-                       style="
-                            -fx-font-size:20;
-                            -fx-font-weight:bold;
-                       "/>
+                <Label text="☎ Emergency Contacts"
+                       style="-fx-font-size:20;
+                              -fx-font-weight:bold;"/>
 
-                <Label text="✔ Report Submitted"/>
-
-                <Label text="✔ Incident Assessed"/>
-
-                <Label text="✔ Emergency Services Dispatched"/>
-
-                <Label text="⏳ Resolution In Progress"/>
+                <Label text="🚨 Triple Zero (000)"/>
+                <Label text="🚓 Police Assistance (131 444)"/>
+                <Label text="🚑 Ambulance Victoria"/>
+                <Label text="🌊 SES Victoria (132 500)"/>
+                <Label text="☠ Poisons Information (13 11 26)"/>
 
             </VBox>
 
-            <!-- SHELTER CARD -->
+            <!-- EMERGENCY PREPAREDNESS -->
 
             <VBox GridPane.rowIndex="1"
                   GridPane.columnIndex="1"
                   spacing="10"
-                  prefWidth="500"
-                  style="
-                    -fx-background-color:white;
-                    -fx-padding:20;
-                    -fx-background-radius:10;
-                  ">
+                  prefWidth="350"
+                  style="-fx-background-color:white;
+                         -fx-padding:20;
+                         -fx-background-radius:10;">
+
+                <Label text="✅ Emergency Preparedness"
+                       style="-fx-font-size:20;
+                              -fx-font-weight:bold;"/>
+
+                <CheckBox text="Emergency Kit Ready"/>
+                <CheckBox text="Emergency Contacts Saved"/>
+                <CheckBox text="Family Evacuation Plan"/>
+                <CheckBox text="Portable Charger Available"/>
+                <CheckBox text="Emergency Supplies Stocked"/>
+
+            </VBox>
+
+            <!-- SHELTER -->
+
+            <VBox GridPane.rowIndex="1"
+                  GridPane.columnIndex="2"
+                  spacing="10"
+                  prefWidth="350"
+                  style="-fx-background-color:white;
+                         -fx-padding:20;
+                         -fx-background-radius:10;">
 
                 <Label text="🏠 Nearest Emergency Shelter"
-                       style="
-                            -fx-font-size:20;
-                            -fx-font-weight:bold;
-                       "/>
+                       style="-fx-font-size:20;
+                              -fx-font-weight:bold;"/>
 
                 <Label text="Melbourne Town Hall Shelter"/>
-
                 <Label text="Capacity: 120 / 200"/>
-
                 <Label text="Distance: 1.8 km"/>
 
                 <Button text="View Directions"
                         prefWidth="180"
-                        style="
-                            -fx-background-color:#2E7D32;
-                            -fx-text-fill:white;
-                            -fx-font-weight:bold;
-                        "/>
+                        style="-fx-background-color:#2E7D32;
+                               -fx-text-fill:white;
+                               -fx-font-weight:bold;"/>
 
             </VBox>
 
@@ -159,22 +215,6 @@
 
     </center>
 
-    <!-- FOOTER -->
-
-    <bottom>
-
-        <HBox alignment="CENTER_RIGHT"
-              spacing="10">
-
-            <padding>
-                <Insets top="10" right="20" bottom="10" left="20"/>
-            </padding>
-
-            <Button text="Logout"
-                    onAction="#handleLogout"/>
-
-        </HBox>
-
-    </bottom>
+    
 
 </BorderPane>

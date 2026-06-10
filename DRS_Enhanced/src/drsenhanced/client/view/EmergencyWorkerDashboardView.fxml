@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="drsenhanced.client.controller.EmergencyWorkerDashboardController"
+            style="-fx-background-color:#F4F6F8;">
+
+    <!-- HEADER -->
+
+    <top>
+
+        <HBox alignment="CENTER_LEFT"
+              prefHeight="70"
+              spacing="20"
+              style="-fx-background-color:#F57C00;">
+
+            <padding>
+                <Insets left="25" right="25"/>
+            </padding>
+
+            <Label text="🚑 Emergency Worker Operations Centre"
+                   style="
+                    -fx-text-fill:white;
+                    -fx-font-size:24;
+                    -fx-font-weight:bold;
+               "/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="⬅ Back"
+                    onAction="#handleBack"
+                    prefWidth="120"
+                    prefHeight="40"
+                    style="
+            -fx-background-color:#757575;
+            -fx-text-fill:white;
+            -fx-font-weight:bold;
+            -fx-background-radius:10;
+        "/>
+
+            <Button text="Logout"
+                    onAction="#handleLogout"
+                    prefWidth="120"
+                    prefHeight="40"
+                    style="
+            -fx-background-color:#D32F2F;
+            -fx-text-fill:white;
+            -fx-font-weight:bold;
+            -fx-background-radius:10;
+        "/>
+
+        </HBox>
+
+    </top>
+
+    <!-- CONTENT -->
+
+    <center>
+
+        <ScrollPane fitToWidth="true">
+
+            <content>
+
+                <VBox spacing="20">
+
+                    <padding>
+                        <Insets top="25" right="25" bottom="25" left="25"/>
+                    </padding>
+
+                    <!-- TOP CARDS -->
+
+                    <HBox spacing="20">
+
+                        <VBox spacing="10"
+                              prefWidth="500"
+                              style="
+                                    -fx-background-color:white;
+                                    -fx-padding:20;
+                                    -fx-background-radius:10;
+                              ">
+
+                            <Label text="🆔 Assigned Mission"
+                                   style="
+                                        -fx-font-size:18;
+                                        -fx-font-weight:bold;
+                                   "/>
+
+                            <Label text="Incident: Fire"/>
+                            <Label text="Location: Melbourne CBD"/>
+                            <Label text="Priority: HIGH"/>
+
+                        </VBox>
+
+                        <VBox spacing="10"
+                              prefWidth="300"
+                              style="
+                                    -fx-background-color:white;
+                                    -fx-padding:20;
+                                    -fx-background-radius:10;
+                              ">
+
+                            <Label text="📡 Live Status"
+                                   style="
+                                        -fx-font-size:18;
+                                        -fx-font-weight:bold;
+                                   "/>
+
+                            <Label text="Status: On Route"/>
+                            <Label text="ETA: 6 Minutes"/>
+
+                        </VBox>
+
+                    </HBox>
+
+                    <!-- MISSION DETAILS + SUPPORT + ACTIVITY -->
+
+                    <HBox spacing="20">
+
+                        <!-- MISSION DETAILS -->
+
+                        <VBox spacing="10"
+                              prefWidth="600"
+                              style="
+                                    -fx-background-color:white;
+                                    -fx-padding:20;
+                                    -fx-background-radius:10;
+                              ">
+
+                            <Label text="📋 Mission Details"
+                                   style="
+                                        -fx-font-size:20;
+                                        -fx-font-weight:bold;
+                                   "/>
+
+                            <Label text="Incident ID : INC-1001"/>
+                            <Label text="Type : Fire"/>
+                            <Label text="Affected Citizens : 15"/>
+                            <Label text="Required Fire Units : 4"/>
+                            <Label text="Area Status : Active Emergency"/>
+                            <Label text="Command Centre : Melbourne CBD"/>
+
+                        </VBox>
+
+                        <!-- SUPPORT -->
+
+                        <VBox spacing="10"
+                              prefWidth="250"
+                              style="
+                                    -fx-background-color:white;
+                                    -fx-padding:20;
+                                    -fx-background-radius:10;
+                              ">
+
+                            <Label text="📦 Additional Support"
+                                   style="
+                                        -fx-font-size:18;
+                                        -fx-font-weight:bold;
+                                   "/>
+
+                            <Button text="Request Ambulance"
+                                    onAction="#handleRequestAmbulance"
+                                    prefWidth="180"/>
+
+                            <Button text="Request Police"
+                                    onAction="#handleRequestPolice"
+                                    prefWidth="180"/>
+
+                            <Button text="Request Shelter Team"
+                                    onAction="#handleRequestShelter"
+                                    prefWidth="180"/>
+
+                        </VBox>
+
+                        <!-- ACTIVITY LOG -->
+
+                        <VBox spacing="10"
+                              prefWidth="350"
+                              style="
+                                    -fx-background-color:white;
+                                    -fx-padding:20;
+                                    -fx-background-radius:10;
+                              ">
+
+                            <Label text="📜 Mission Activity Log"
+                                   style="
+                                        -fx-font-size:18;
+                                        -fx-font-weight:bold;
+                                   "/>
+
+                            <ListView fx:id="activityList"
+                                      prefHeight="220"/>
+
+                        </VBox>
+
+                    </HBox>
+
+                    <!-- TASK CHECKLIST -->
+
+                    <VBox spacing="10"
+                          style="
+                                -fx-background-color:white;
+                                -fx-padding:20;
+                                -fx-background-radius:10;
+                          ">
+
+                        <Label text="✔ Task Checklist"
+                               style="
+                                    -fx-font-size:20;
+                                    -fx-font-weight:bold;
+                               "/>
+
+                        <CheckBox text="Arrived On Scene"/>
+                        <CheckBox text="Area Secured"/>
+                        <CheckBox text="Casualties Assessed"/>
+                        <CheckBox text="Incident Resolved"/>
+
+                    </VBox>
+
+                    <!-- STATUS UPDATE -->
+
+                    <VBox spacing="10"
+                          style="
+                                -fx-background-color:white;
+                                -fx-padding:20;
+                                -fx-background-radius:10;
+                          ">
+
+                        <Label text="📝 Status Update"
+                               style="
+                                    -fx-font-size:20;
+                                    -fx-font-weight:bold;
+                               "/>
+
+                        <TextArea fx:id="updateArea"
+                                  prefHeight="120"
+                                  promptText="Enter field update..."/>
+
+                        <Button text="Submit Update"
+                                onAction="#handleSubmitUpdate"
+                                prefWidth="180"/>
+
+                    </VBox>
+
+                    <!-- COMPLETE MISSION -->
+
+                    <VBox spacing="10"
+                          alignment="CENTER"
+                          style="
+                                -fx-background-color:white;
+                                -fx-padding:20;
+                                -fx-background-radius:10;
+                          ">
+
+                        <Button text="✅ COMPLETE INCIDENT"
+                                onAction="#handleCompleteMission"
+                                prefWidth="300"
+                                prefHeight="55"
+                                style="
+                                    -fx-background-color:#2E7D32;
+                                    -fx-text-fill:white;
+                                    -fx-font-size:18;
+                                    -fx-font-weight:bold;
+                                "/>
+
+                    </VBox>
+
+                </VBox>
+
+            </content>
+
+        </ScrollPane>
+
+    </center>
+
+</BorderPane>
