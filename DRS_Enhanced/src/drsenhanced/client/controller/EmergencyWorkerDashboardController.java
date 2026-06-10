@@ -96,6 +96,6 @@ public class EmergencyWorkerDashboardController {
 
     @FXML
     private void handleLogout() {
-        SceneManager.showEmergencyWorkerLogin();
+        SceneManager.logout();
     }
 }
