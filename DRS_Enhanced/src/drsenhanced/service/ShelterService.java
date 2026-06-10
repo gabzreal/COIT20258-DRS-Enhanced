@@ -59,7 +59,7 @@ public class ShelterService {
      * @return true if update succeeds
      * @throws SQLException if database access fails
      */
-    public boolean updateCapacity(int shelterId, int occupancy)
+    public boolean updateOccupancy(int shelterId, int occupancy)
             throws SQLException {
         return shelterDAO.updateOccupancy(shelterId, occupancy);
     }
