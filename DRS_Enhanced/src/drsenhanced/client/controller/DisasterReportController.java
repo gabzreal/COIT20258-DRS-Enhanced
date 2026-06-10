@@ -9,13 +9,18 @@ package drsenhanced.client.controller;
  *
  * @author Krishna Kakani - 12279867
  */
+import drsenhanced.model.User;
+import drsenhanced.service.CitizenService;
 import drsenhanced.util.SceneManager;
+import drsenhanced.util.SessionContext;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class DisasterReportController {
+
+    private final CitizenService citizenService = new CitizenService();
 
     @FXML
     private Label severityLabel;
@@ -394,15 +399,39 @@ public class DisasterReportController {
                         + "📞 Triple Zero (000)"
                 );
         }
-        System.out.println(
-                "Incident Submitted: "
-                + selectedDisasterType
-        );
+        User citizen = SessionContext.getCurrentUser();
+        if (citizen == null
+                || !"citizen".equalsIgnoreCase(citizen.getRole())) {
+            severityStatusLabel.setText(
+                    "Please log in as a citizen before submitting.");
+            return;
+        }
+
+        try {
+            String severity = switch (selectedSeverity == null
+                    ? "" : selectedSeverity) {
+                case "Severe" -> "HIGH";
+                case "Minor" -> "LOW";
+                default -> "MEDIUM";
+            };
+            var report = citizenService.submitReport(
+                    citizen.getUserId(),
+                    selectedDisasterType,
+                    location,
+                    severity);
+            severityStatusLabel.setText(
+                    "Report " + report.getReportId()
+                    + " saved. Incident " + report.getIncidentId()
+                    + " is pending assessment.");
+        } catch (java.sql.SQLException e) {
+            severityStatusLabel.setText(
+                    "Report could not be saved. Check database connection.");
+        }
     }
 
     @FXML
     private void handleBack() {
 
-        SceneManager.showCitizenAccess();
+        SceneManager.goBack();
     }
 }

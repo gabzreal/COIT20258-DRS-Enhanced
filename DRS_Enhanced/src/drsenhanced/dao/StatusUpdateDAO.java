@@ -10,6 +10,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles emergency-worker status update persistence.
+ *
+ * @author Gabriel Fernandez Balbuena - 12292617
+ */
 public class StatusUpdateDAO {
 
     public int create(StatusUpdate update) throws SQLException {
@@ -43,15 +48,37 @@ public class StatusUpdateDAO {
             statement.setInt(1, incidentId);
             try (ResultSet result = statement.executeQuery()) {
                 while (result.next()) {
-                    updates.add(new StatusUpdate(
-                            result.getInt("update_id"),
-                            result.getInt("incident_id"),
-                            result.getInt("worker_id"),
-                            result.getString("message"),
-                            result.getTimestamp("created_at").toString()));
+                    updates.add(mapUpdate(result));
                 }
             }
         }
         return updates;
+    }
+
+    public List<StatusUpdate> findByWorkerId(int workerId)
+            throws SQLException {
+        String sql = "SELECT update_id, incident_id, worker_id, message, "
+                + "created_at FROM status_updates WHERE worker_id = ? "
+                + "ORDER BY created_at DESC";
+        List<StatusUpdate> updates = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, workerId);
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    updates.add(mapUpdate(result));
+                }
+            }
+        }
+        return updates;
+    }
+
+    private StatusUpdate mapUpdate(ResultSet result) throws SQLException {
+        return new StatusUpdate(
+                result.getInt("update_id"),
+                result.getInt("incident_id"),
+                result.getInt("worker_id"),
+                result.getString("message"),
+                result.getTimestamp("created_at").toString());
     }
 }

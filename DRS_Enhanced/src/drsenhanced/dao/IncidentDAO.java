@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Handles incident persistence and retrieval.
+ *
+ * @author Gabriel Fernandez Balbuena - 12292617
+ */
 public class IncidentDAO {
 
     public int create(Incident incident) throws SQLException {
@@ -74,6 +79,23 @@ public class IncidentDAO {
                 ResultSet result = statement.executeQuery()) {
             while (result.next()) {
                 incidents.add(mapIncident(result));
+            }
+        }
+        return incidents;
+    }
+
+    public List<Incident> findByAssignedWorker(String assignedWorker)
+            throws SQLException {
+        String sql = "SELECT * FROM incidents WHERE assigned_worker = ? "
+                + "ORDER BY incident_id DESC";
+        List<Incident> incidents = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, assignedWorker);
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    incidents.add(mapIncident(result));
+                }
             }
         }
         return incidents;

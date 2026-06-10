@@ -12,6 +12,7 @@ package drsenhanced.client.controller;
  *
  * @author Krishna Kakani - 12296276
  */
+import drsenhanced.service.AuthenticationService;
 import drsenhanced.util.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -19,6 +20,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class CityManagerLoginController {
+
+    private final AuthenticationService authenticationService
+            = new AuthenticationService();
 
     @FXML
     private TextField managerIdField;
@@ -35,15 +39,14 @@ public class CityManagerLoginController {
         String managerId = managerIdField.getText();
         String password = passwordField.getText();
 
-        // Placeholder authentication
-        if (managerId.equals("manager")
-                && password.equals("admin")) {
+        if (authenticationService.login(
+                managerId, password, "CityManager").isPresent()) {
 
             SceneManager.showCityManagerDashboard();
 
         } else {
 
-            messageLabel.setText("Invalid Manager ID or Password");
+            messageLabel.setText("Invalid manager ID or password");
 
         }
     }
@@ -51,7 +54,7 @@ public class CityManagerLoginController {
     @FXML
     private void handleBack() {
 
-        SceneManager.showDashboard();
+        SceneManager.goBack();
 
     }
 }

@@ -75,6 +75,7 @@
                   alignment="CENTER">
 
                 <Button text="👤 Continue as Citizen"
+                        fx:id="citizenButton"
                         prefWidth="260"
                         prefHeight="70"
                         onAction="#handleCitizen"
@@ -88,6 +89,7 @@
                         "/>
 
                 <Button text="🎯 Continue as City Manager"
+                        fx:id="managerButton"
                         prefWidth="260"
                         prefHeight="70"
                         onAction="#handleManager"
@@ -101,6 +103,7 @@
                         "/>
 
                 <Button text="🚒 Continue as Emergency Worker"
+                        fx:id="workerButton"
                         prefWidth="280"
                         prefHeight="70"
                         onAction="#handleWorker"

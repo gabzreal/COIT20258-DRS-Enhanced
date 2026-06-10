@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * ShelterDAO handles database operations
@@ -52,11 +53,36 @@ public class ShelterDAO {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ResultSet result = statement.executeQuery()) {
             while (result.next()) {
-                shelters.add(new Shelter(
-                        result.getInt("shelter_id"),
-                        result.getString("name"),
-                        result.getInt("capacity"),
-                        result.getInt("current_occupancy")));
+                shelters.add(mapShelter(result));
+            }
+        }
+        return shelters;
+    }
+
+    public Optional<Shelter> findById(int shelterId) throws SQLException {
+        String sql = "SELECT shelter_id, name, capacity, current_occupancy "
+                + "FROM shelters WHERE shelter_id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, shelterId);
+            try (ResultSet result = statement.executeQuery()) {
+                return result.next()
+                        ? Optional.of(mapShelter(result))
+                        : Optional.empty();
+            }
+        }
+    }
+
+    public List<Shelter> findAvailable() throws SQLException {
+        String sql = "SELECT shelter_id, name, capacity, current_occupancy "
+                + "FROM shelters WHERE current_occupancy < capacity "
+                + "ORDER BY name";
+        List<Shelter> shelters = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet result = statement.executeQuery()) {
+            while (result.next()) {
+                shelters.add(mapShelter(result));
             }
         }
         return shelters;
@@ -73,5 +99,13 @@ public class ShelterDAO {
             statement.setInt(3, occupancy);
             return statement.executeUpdate() == 1;
         }
+    }
+
+    private Shelter mapShelter(ResultSet result) throws SQLException {
+        return new Shelter(
+                result.getInt("shelter_id"),
+                result.getString("name"),
+                result.getInt("capacity"),
+                result.getInt("current_occupancy"));
     }
 }
