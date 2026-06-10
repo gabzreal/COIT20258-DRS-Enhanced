@@ -39,7 +39,7 @@ public final class SceneManager {
             "Citizen Dashboard", "Citizen", false);
     private static final Route DISASTER_REPORT = new Route(
             "/drsenhanced/client/view/DisasterReportView.fxml",
-            "Report Emergency", "Citizen", false);
+            "Report Emergency", null, false);
     private static final Route MANAGER_LOGIN = new Route(
             "/drsenhanced/client/view/CityManagerLoginView.fxml",
             "City Manager Login", null, true);
@@ -228,19 +228,27 @@ public final class SceneManager {
             return DASHBOARD;
         }
         return switch (normalizeRole(user.getRole())) {
-            case "citizen" -> CITIZEN_DASHBOARD;
-            case "citymanager" -> MANAGER_DASHBOARD;
-            case "emergencyworker" -> WORKER_DASHBOARD;
-            default -> DASHBOARD;
+            case "citizen" ->
+                CITIZEN_DASHBOARD;
+            case "citymanager" ->
+                MANAGER_DASHBOARD;
+            case "emergencyworker" ->
+                WORKER_DASHBOARD;
+            default ->
+                DASHBOARD;
         };
     }
 
     private static Route loginRouteFor(String role) {
         return switch (normalizeRole(role)) {
-            case "citizen" -> CITIZEN_ACCESS;
-            case "citymanager" -> MANAGER_LOGIN;
-            case "emergencyworker" -> WORKER_LOGIN;
-            default -> LOGIN;
+            case "citizen" ->
+                CITIZEN_ACCESS;
+            case "citymanager" ->
+                MANAGER_LOGIN;
+            case "emergencyworker" ->
+                WORKER_LOGIN;
+            default ->
+                LOGIN;
         };
     }
 
@@ -252,5 +260,6 @@ public final class SceneManager {
 
     private record Route(String fxmlPath, String title,
             String requiredRole, boolean authenticationEntry) {
+
     }
 }
