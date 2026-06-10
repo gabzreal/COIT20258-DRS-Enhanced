@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java
  */
 package drsenhanced.client.controller;
-
+/**
+ * LoginController handles citizen authentication
+ * and navigation to the Citizen Dashboard.
+ *
+ * @author Krishna Kakani - 12279867
+ */
 import drsenhanced.util.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;

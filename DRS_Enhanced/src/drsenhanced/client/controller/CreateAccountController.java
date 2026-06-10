@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package drsenhanced.client.controller;
-
+/**
+ * CreateAccountController handles citizen account
+ * registration and validation processes.
+ *
+ * @author Krishna Kakani - 12279867
+ */
 import drsenhanced.util.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;

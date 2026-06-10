@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package drsenhanced.client.controller;
-
+/**
+ * CitizenAccessController manages citizen access options
+ * including login, account creation, and navigation.
+ *
+ * @author Krishna Kakani - 12279867
+ */
 import drsenhanced.util.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;

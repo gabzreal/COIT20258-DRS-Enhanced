@@ -4,7 +4,12 @@
  */
 package drsenhanced.client.controller;
 
-
+/**
+ * IncidentAssessmentController supports incident analysis, risk evaluation,
+ * resource allocation, and emergency response recommendations.
+ *
+ * @author Krishna Kakani -12279867
+ */
 import drsenhanced.util.SceneManager;
 
 import javafx.fxml.FXML;
