@@ -36,9 +36,10 @@ separate local JavaFX SDK installation is not required on Windows.
 
 ### Database Setup
 
-Run `sql/drs_enhanced_schema.sql` in MySQL before using database-backed
-features. Run `sql/demo_data.sql` afterward to add sample accounts and
-shelters. The default connection is:
+On startup, the application automatically creates the configured database,
+missing tables, demo accounts, and sample shelters. MySQL must already be
+installed and running, and the configured user must have permission to create
+databases and tables. The default connection is:
 
 - URL: `jdbc:mysql://localhost:3306/drs_enhanced`
 - User: `root`
@@ -48,6 +49,8 @@ Override these defaults with `DRS_DB_URL`, `DRS_DB_USER`, and
 `DRS_DB_PASSWORD` environment variables. Existing databases created with the
 old schema can be migrated using `sql/migrate_legacy_schema.sql` after taking a
 backup.
+
+The scripts in `sql/` remain available for manual setup and migration.
 
 Demo logins:
 
