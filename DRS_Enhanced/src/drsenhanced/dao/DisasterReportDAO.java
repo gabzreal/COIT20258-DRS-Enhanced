@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * DisasterReportDAO handles database operations
@@ -56,14 +57,26 @@ public class DisasterReportDAO {
             statement.setInt(1, citizenId);
             try (ResultSet result = statement.executeQuery()) {
                 while (result.next()) {
-                    reports.add(new DisasterReport(
-                            result.getInt("report_id"),
-                            result.getInt("citizen_id"),
-                            result.getInt("incident_id")));
+                    reports.add(mapReport(result));
                 }
             }
         }
         return reports;
+    }
+
+    public Optional<DisasterReport> findByIncidentId(int incidentId)
+            throws SQLException {
+        String sql = "SELECT report_id, citizen_id, incident_id "
+                + "FROM disaster_reports WHERE incident_id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, incidentId);
+            try (ResultSet result = statement.executeQuery()) {
+                return result.next()
+                        ? Optional.of(mapReport(result))
+                        : Optional.empty();
+            }
+        }
     }
 
     public boolean linkToIncident(int reportId, int incidentId)
@@ -76,5 +89,12 @@ public class DisasterReportDAO {
             statement.setInt(2, reportId);
             return statement.executeUpdate() == 1;
         }
+    }
+
+    private DisasterReport mapReport(ResultSet result) throws SQLException {
+        return new DisasterReport(
+                result.getInt("report_id"),
+                result.getInt("citizen_id"),
+                result.getInt("incident_id"));
     }
 }
