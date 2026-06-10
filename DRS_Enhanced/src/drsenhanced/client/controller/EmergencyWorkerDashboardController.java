@@ -3,10 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package drsenhanced.client.controller;
+
 /**
- * EmergencyWorkerDashboardController allows emergency
- * workers to view mission details, update field status,
- * request additional support, and complete incidents.
+ * EmergencyWorkerDashboardController allows emergency workers to view mission
+ * details, update field status, request additional support, and complete
+ * incidents.
  *
  * @author Krishna Kakani - 12279867
  */
@@ -90,8 +91,11 @@ public class EmergencyWorkerDashboardController {
 
     @FXML
     private void handleBack() {
+        SceneManager.showDashboard();
+    }
 
+    @FXML
+    private void handleLogout() {
         SceneManager.showEmergencyWorkerLogin();
-
     }
 }
