@@ -12,21 +12,12 @@ import java.sql.SQLException;
  */
 public class DatabaseConnection {
 
-    /**
-     * Database URL.
-     */
-    private static final String URL
-            = "jdbc:mysql://localhost:3306/drs_enhanced";
-
-    /**
-     * MySQL username.
-     */
-    private static final String USER = "root";
-
-    /**
-     * MySQL password.
-     */
-    private static final String PASSWORD = "pass";
+    private static final String DEFAULT_URL
+            = "jdbc:mysql://localhost:3306/drs_enhanced"
+            + "?useSSL=false&allowPublicKeyRetrieval=true"
+            + "&serverTimezone=Australia/Sydney";
+    private static final String DEFAULT_USER = "root";
+    private static final String DEFAULT_PASSWORD = "pass";
 
     /**
      * Returns a connection to the MySQL database.
@@ -35,7 +26,17 @@ public class DatabaseConnection {
      * @throws SQLException if database connection fails
      */
     public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(
+                getSetting("DRS_DB_URL", DEFAULT_URL),
+                getSetting("DRS_DB_USER", DEFAULT_USER),
+                getSetting("DRS_DB_PASSWORD", DEFAULT_PASSWORD));
+    }
 
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    private static String getSetting(String name, String defaultValue) {
+        String value = System.getenv(name);
+        if (value == null || value.isBlank()) {
+            value = System.getProperty(name);
+        }
+        return value == null || value.isBlank() ? defaultValue : value;
     }
 }
