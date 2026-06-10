@@ -27,9 +27,19 @@ public class DatabaseConnection {
      */
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
-                getSetting("DRS_DB_URL", DEFAULT_URL),
-                getSetting("DRS_DB_USER", DEFAULT_USER),
-                getSetting("DRS_DB_PASSWORD", DEFAULT_PASSWORD));
+                getUrl(), getUser(), getPassword());
+    }
+
+    static String getUrl() {
+        return getSetting("DRS_DB_URL", DEFAULT_URL);
+    }
+
+    static String getUser() {
+        return getSetting("DRS_DB_USER", DEFAULT_USER);
+    }
+
+    static String getPassword() {
+        return getSetting("DRS_DB_PASSWORD", DEFAULT_PASSWORD);
     }
 
     private static String getSetting(String name, String defaultValue) {
