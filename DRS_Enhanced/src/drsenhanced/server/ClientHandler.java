@@ -1,1 +1,236 @@
-package drsenhanced.server;import drsenhanced.dao.DisasterReportDAO;import drsenhanced.dao.EvacuationRecordDAO;import drsenhanced.dao.EvacuationRecordDAO.EvacuationRecord;import drsenhanced.dao.ResourceDAO;import drsenhanced.dao.ResponseLogDAO;import drsenhanced.dao.ShelterDAO;import drsenhanced.dao.UserDAO;import drsenhanced.model.DisasterReport;import drsenhanced.model.Resource;import drsenhanced.model.Shelter;import drsenhanced.model.User;import java.io.BufferedReader;import java.io.IOException;import java.io.InputStreamReader;import java.io.PrintWriter;import java.net.Socket;import java.sql.SQLException;import java.util.List;import java.util.Optional;/** * Handles communication with one connected client. * Each client gets its own thread via this class. * Reads the command from the message, calls the right DAO, * and sends back the result. * * @author Angelica - P5 Server and Testing */public class ClientHandler implements Runnable {    private final Socket clientSocket;    // DAO instances used to talk to the database    private final UserDAO userDAO                   = new UserDAO();    private final DisasterReportDAO reportDAO       = new DisasterReportDAO();    private final ResourceDAO resourceDAO           = new ResourceDAO();    private final ShelterDAO shelterDAO             = new ShelterDAO();    private final EvacuationRecordDAO evacuationDAO = new EvacuationRecordDAO();    private final ResponseLogDAO responseLogDAO     = new ResponseLogDAO();    public ClientHandler(Socket clientSocket) {        this.clientSocket = clientSocket;    }    @Override    public void run() {        System.out.println("Client connected: "                + clientSocket.getInetAddress().getHostAddress());        try (            BufferedReader input = new BufferedReader(                    new InputStreamReader(clientSocket.getInputStream()));            PrintWriter output = new PrintWriter(                    clientSocket.getOutputStream(), true)        ) {            String message;            // keep reading until the client disconnects            while ((message = input.readLine()) != null) {                System.out.println("Received: " + message);                String response = processRequest(message);                output.println(response);                System.out.println("Sent: " + response);            }        } catch (IOException e) {            System.out.println("Client disconnected: " + e.getMessage());        } finally {            try {                clientSocket.close();            } catch (IOException e) {                System.out.println("Error closing socket: " + e.getMessage());            }        }    }    /**     * Splits the message by "|", reads the command,     * and routes it to the right handler method.     * Format: COMMAND|param1|param2|...     */    private String processRequest(String message) {        String[] parts = MessageProtocol.parseMessage(message);        String command = parts[0];        switch (command) {            case MessageProtocol.LOGIN:                return handleLogin(parts);            case MessageProtocol.REPORT:                return handleReport(parts);            case MessageProtocol.GET_ALL_REPORTS:                return handleGetAllReports(parts);            case MessageProtocol.GET_AVAILABLE_RESOURCES:                return handleGetAvailableResources(parts);            case MessageProtocol.ASSIGN_RESOURCE:                return handleAssignResource(parts);            case MessageProtocol.CHECK_SHELTER:                return handleCheckShelter(parts);            case MessageProtocol.ASSIGN_SHELTER:                return handleAssignShelter(parts);            case MessageProtocol.UPDATE_STATUS:                return handleUpdateStatus(parts);            case MessageProtocol.GET_RESPONSE_LOG:                return handleGetResponseLog(parts);            default:                return MessageProtocol.buildError("Unknown command: " + command);        }    }    // -----------------------------------------------------------    // Handler methods - one per command    // -----------------------------------------------------------    // LOGIN|username|password    private String handleLogin(String[] parts) {        if (parts.length < 3) {            return MessageProtocol.buildError("Missing username or password");        }        Optional<User> user = userDAO.authenticate(parts[1], parts[2]);        if (user.isPresent()) {            // return the role so the client loads the right dashboard            return MessageProtocol.buildSuccess("Login successful", user.get().getRole());        }        return MessageProtocol.buildError("Invalid username or password");    }    // REPORT|citizenId|incidentId    private String handleReport(String[] parts) {        if (parts.length < 3) {            return MessageProtocol.buildError("Missing report fields");        }        try {            int citizenId  = Integer.parseInt(parts[1]);            int incidentId = Integer.parseInt(parts[2]);            DisasterReport report = new DisasterReport(0, citizenId, incidentId);            int reportId = reportDAO.create(report);            if (reportId > 0) {                return MessageProtocol.buildSuccess("Report saved", String.valueOf(reportId));            }            return MessageProtocol.buildError("Could not save report");        } catch (NumberFormatException e) {            return MessageProtocol.buildError("Invalid ID format");        } catch (SQLException e) {            System.out.println("DB error saving report: " + e.getMessage());            return MessageProtocol.buildError("Database error");        }    }    // GET_ALL_REPORTS|citizenId    private String handleGetAllReports(String[] parts) {        if (parts.length < 2) {            return MessageProtocol.buildError("Missing citizen ID");        }        try {            int citizenId = Integer.parseInt(parts[1]);            List<DisasterReport> reports = reportDAO.findByCitizenId(citizenId);            if (reports.isEmpty()) {                return MessageProtocol.buildSuccess("No reports found", "0");            }            // build a simple list: reportId:incidentId,reportId:incidentId,...            StringBuilder sb = new StringBuilder();            for (DisasterReport r : reports) {                sb.append(r.getReportId()).append(":").append(r.getIncidentId()).append(",");            }            return MessageProtocol.buildSuccess("Reports fetched", sb.toString());        } catch (NumberFormatException e) {            return MessageProtocol.buildError("Invalid citizen ID");        } catch (SQLException e) {            System.out.println("DB error fetching reports: " + e.getMessage());            return MessageProtocol.buildError("Database error");        }    }    // GET_AVAILABLE_RESOURCES|incidentId    private String handleGetAvailableResources(String[] parts) {        if (parts.length < 2) {            return MessageProtocol.buildError("Missing incident ID");        }        try {            int incidentId = Integer.parseInt(parts[1]);            List<Resource> resources = resourceDAO.findByIncidentId(incidentId);            if (resources.isEmpty()) {                return MessageProtocol.buildSuccess("No resources found", "0");            }            StringBuilder sb = new StringBuilder();            for (Resource r : resources) {                sb.append(r.getDispatchId()).append(":")                  .append(r.getResourceType()).append(":")                  .append(r.getStatus()).append(",");            }            return MessageProtocol.buildSuccess("Resources fetched", sb.toString());        } catch (NumberFormatException e) {            return MessageProtocol.buildError("Invalid incident ID");        } catch (SQLException e) {            System.out.println("DB error fetching resources: " + e.getMessage());            return MessageProtocol.buildError("Database error");        }    }    // ASSIGN_RESOURCE|incidentId|resourceType    private String handleAssignResource(String[] parts) {        if (parts.length < 3) {            return MessageProtocol.buildError("Missing resource fields");        }        try {            int incidentId    = Integer.parseInt(parts[1]);            String resType    = parts[2];            Resource resource = new Resource(0, incidentId, resType, "ASSIGNED");            int dispatchId    = resourceDAO.createDispatch(resource);            if (dispatchId > 0) {                return MessageProtocol.buildSuccess("Resource assigned", String.valueOf(dispatchId));            }            return MessageProtocol.buildError("Could not assign resource");        } catch (NumberFormatException e) {            return MessageProtocol.buildError("Invalid ID format");        } catch (SQLException e) {            System.out.println("DB error assigning resource: " + e.getMessage());            return MessageProtocol.buildError("Database error");        }    }    // CHECK_SHELTER|shelterId    private String handleCheckShelter(String[] parts) {        if (parts.length < 2) {            return MessageProtocol.buildError("Missing shelter ID");        }        try {            int shelterId = Integer.parseInt(parts[1]);            Optional<Shelter> shelter = shelterDAO.findById(shelterId);            if (shelter.isPresent()) {                Shelter s = shelter.get();                int available = s.getCapacity() - s.getCurrentOccupancy();                return MessageProtocol.buildSuccess("Shelter found",                        s.getName() + "|" + s.getCapacity()                        + "|" + s.getCurrentOccupancy() + "|" + available);            }            return MessageProtocol.buildError("Shelter not found");        } catch (NumberFormatException e) {            return MessageProtocol.buildError("Invalid shelter ID");        } catch (SQLException e) {            System.out.println("DB error checking shelter: " + e.getMessage());            return MessageProtocol.buildError("Database error");        }    }    // ASSIGN_SHELTER|reportId|shelterId|people    private String handleAssignShelter(String[] parts) {        if (parts.length < 4) {            return MessageProtocol.buildError("Missing shelter assignment fields");        }        try {            int reportId  = Integer.parseInt(parts[1]);            int shelterId = Integer.parseInt(parts[2]);            int people    = Integer.parseInt(parts[3]);            Optional<Shelter> shelter = shelterDAO.findById(shelterId);            if (shelter.isEmpty()) {                return MessageProtocol.buildError("Shelter not found");            }            Shelter s = shelter.get();            int newOccupancy = s.getCurrentOccupancy() + people;            if (newOccupancy > s.getCapacity()) {                return MessageProtocol.buildError("Not enough space in shelter");            }            // save the evacuation record then update occupancy            EvacuationRecord record = new EvacuationRecord(                    0, reportId, shelterId, people, true, people);            evacuationDAO.create(record);            shelterDAO.updateOccupancy(shelterId, newOccupancy);            return MessageProtocol.buildSuccess("Shelter assigned", String.valueOf(shelterId));        } catch (NumberFormatException e) {            return MessageProtocol.buildError("Invalid number format");        } catch (SQLException e) {            System.out.println("DB error assigning shelter: " + e.getMessage());            return MessageProtocol.buildError("Database error");        }    }    // UPDATE_STATUS|dispatchId|newStatus    private String handleUpdateStatus(String[] parts) {        if (parts.length < 3) {            return MessageProtocol.buildError("Missing status fields");        }        try {            int dispatchId    = Integer.parseInt(parts[1]);            String newStatus  = parts[2];            boolean updated = resourceDAO.updateStatus(dispatchId, newStatus);            if (updated) {                return MessageProtocol.buildSuccess("Status updated", String.valueOf(dispatchId));            }            return MessageProtocol.buildError("Could not update status");        } catch (NumberFormatException e) {            return MessageProtocol.buildError("Invalid dispatch ID");        } catch (SQLException e) {            System.out.println("DB error updating status: " + e.getMessage());            return MessageProtocol.buildError("Database error");        }    }    // GET_RESPONSE_LOG|incidentId    private String handleGetResponseLog(String[] parts) {        if (parts.length < 2) {            return MessageProtocol.buildError("Missing incident ID");        }        try {            int incidentId = Integer.parseInt(parts[1]);            List<ResponseLogDAO.ResponseLog> logs =                    responseLogDAO.findByIncidentId(incidentId);            if (logs.isEmpty()) {                return MessageProtocol.buildSuccess("No logs found", "0");            }            StringBuilder sb = new StringBuilder();            for (ResponseLogDAO.ResponseLog log : logs) {                sb.append(log.action()).append(":").append(log.details()).append(",");            }            return MessageProtocol.buildSuccess("Logs fetched", sb.toString());        } catch (NumberFormatException e) {            return MessageProtocol.buildError("Invalid incident ID");        } catch (SQLException e) {            System.out.println("DB error fetching logs: " + e.getMessage());            return MessageProtocol.buildError("Database error");        }    }}
+package drsenhanced.server;
+
+import drsenhanced.dao.DisasterReportDAO;
+import drsenhanced.dao.EvacuationRecordDAO;
+import drsenhanced.dao.EvacuationRecordDAO.EvacuationRecord;
+import drsenhanced.dao.ResourceDAO;
+import drsenhanced.dao.ResponseLogDAO;
+import drsenhanced.dao.ShelterDAO;
+import drsenhanced.dao.UserDAO;
+import drsenhanced.model.DisasterReport;
+import drsenhanced.model.Resource;
+import drsenhanced.model.Shelter;
+import drsenhanced.model.User;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * Handles communication with one connected client.
+ * Each client gets its own thread via this class.
+ * Reads the command from the message, calls the right DAO,
+ * and sends back the result.
+ *
+ * @author Angelica - P5 Server and Testing
+ */
+public class ClientHandler implements Runnable {
+
+    private final Socket clientSocket;
+
+    private final UserDAO userDAO                   = new UserDAO();
+    private final DisasterReportDAO reportDAO       = new DisasterReportDAO();
+    private final ResourceDAO resourceDAO           = new ResourceDAO();
+    private final ShelterDAO shelterDAO             = new ShelterDAO();
+    private final EvacuationRecordDAO evacuationDAO = new EvacuationRecordDAO();
+    private final ResponseLogDAO responseLogDAO     = new ResponseLogDAO();
+
+    public ClientHandler(Socket clientSocket) {
+        this.clientSocket = clientSocket;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Client connected: "
+                + clientSocket.getInetAddress().getHostAddress());
+        try (
+            BufferedReader input = new BufferedReader(
+                    new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true)
+        ) {
+            String message;
+            while ((message = input.readLine()) != null) {
+                System.out.println("Received: " + message);
+                String response = processRequest(message);
+                output.println(response);
+                System.out.println("Sent: " + response);
+            }
+        } catch (IOException e) {
+            System.out.println("Client disconnected: " + e.getMessage());
+        } finally {
+            try { clientSocket.close(); }
+            catch (IOException e) { System.out.println("Error closing socket: " + e.getMessage()); }
+        }
+    }
+
+    // splits message by | and routes to correct handler
+    // format: COMMAND|param1|param2|...
+    private String processRequest(String message) {
+        String[] parts = MessageProtocol.parseMessage(message);
+        String command = parts[0];
+        switch (command) {
+            case MessageProtocol.LOGIN:                   return handleLogin(parts);
+            case MessageProtocol.REPORT:                  return handleReport(parts);
+            case MessageProtocol.GET_ALL_REPORTS:         return handleGetAllReports(parts);
+            case MessageProtocol.GET_AVAILABLE_RESOURCES: return handleGetAvailableResources(parts);
+            case MessageProtocol.ASSIGN_RESOURCE:         return handleAssignResource(parts);
+            case MessageProtocol.CHECK_SHELTER:           return handleCheckShelter(parts);
+            case MessageProtocol.ASSIGN_SHELTER:          return handleAssignShelter(parts);
+            case MessageProtocol.UPDATE_STATUS:           return handleUpdateStatus(parts);
+            case MessageProtocol.GET_RESPONSE_LOG:        return handleGetResponseLog(parts);
+            default: return MessageProtocol.buildError("Unknown command: " + command);
+        }
+    }
+
+    // LOGIN|username|password
+    private String handleLogin(String[] parts) {
+        if (parts.length < 3) return MessageProtocol.buildError("Missing username or password");
+        Optional<User> user = userDAO.authenticate(parts[1], parts[2]);
+        if (user.isPresent()) return MessageProtocol.buildSuccess("Login successful", user.get().getRole());
+        return MessageProtocol.buildError("Invalid username or password");
+    }
+
+    // REPORT|citizenId|incidentId
+    private String handleReport(String[] parts) {
+        if (parts.length < 3) return MessageProtocol.buildError("Missing report fields");
+        try {
+            DisasterReport report = new DisasterReport(0, Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+            int reportId = reportDAO.create(report);
+            if (reportId > 0) return MessageProtocol.buildSuccess("Report saved", String.valueOf(reportId));
+            return MessageProtocol.buildError("Could not save report");
+        } catch (NumberFormatException e) {
+            return MessageProtocol.buildError("Invalid ID format");
+        } catch (SQLException e) {
+            System.out.println("DB error saving report: " + e.getMessage());
+            return MessageProtocol.buildError("Database error");
+        }
+    }
+
+    // GET_ALL_REPORTS|citizenId
+    private String handleGetAllReports(String[] parts) {
+        if (parts.length < 2) return MessageProtocol.buildError("Missing citizen ID");
+        try {
+            List<DisasterReport> reports = reportDAO.findByCitizenId(Integer.parseInt(parts[1]));
+            if (reports.isEmpty()) return MessageProtocol.buildSuccess("No reports found", "0");
+            StringBuilder sb = new StringBuilder();
+            for (DisasterReport r : reports) sb.append(r.getReportId()).append(":").append(r.getIncidentId()).append(",");
+            return MessageProtocol.buildSuccess("Reports fetched", sb.toString());
+        } catch (NumberFormatException e) {
+            return MessageProtocol.buildError("Invalid citizen ID");
+        } catch (SQLException e) {
+            System.out.println("DB error fetching reports: " + e.getMessage());
+            return MessageProtocol.buildError("Database error");
+        }
+    }
+
+    // GET_AVAILABLE_RESOURCES|incidentId
+    private String handleGetAvailableResources(String[] parts) {
+        if (parts.length < 2) return MessageProtocol.buildError("Missing incident ID");
+        try {
+            List<Resource> resources = resourceDAO.findByIncidentId(Integer.parseInt(parts[1]));
+            if (resources.isEmpty()) return MessageProtocol.buildSuccess("No resources found", "0");
+            StringBuilder sb = new StringBuilder();
+            for (Resource r : resources) sb.append(r.getDispatchId()).append(":").append(r.getResourceType()).append(":").append(r.getStatus()).append(",");
+            return MessageProtocol.buildSuccess("Resources fetched", sb.toString());
+        } catch (NumberFormatException e) {
+            return MessageProtocol.buildError("Invalid incident ID");
+        } catch (SQLException e) {
+            System.out.println("DB error fetching resources: " + e.getMessage());
+            return MessageProtocol.buildError("Database error");
+        }
+    }
+
+    // ASSIGN_RESOURCE|incidentId|resourceType
+    private String handleAssignResource(String[] parts) {
+        if (parts.length < 3) return MessageProtocol.buildError("Missing resource fields");
+        try {
+            Resource resource = new Resource(0, Integer.parseInt(parts[1]), parts[2], "ASSIGNED");
+            int dispatchId = resourceDAO.createDispatch(resource);
+            if (dispatchId > 0) return MessageProtocol.buildSuccess("Resource assigned", String.valueOf(dispatchId));
+            return MessageProtocol.buildError("Could not assign resource");
+        } catch (NumberFormatException e) {
+            return MessageProtocol.buildError("Invalid ID format");
+        } catch (SQLException e) {
+            System.out.println("DB error assigning resource: " + e.getMessage());
+            return MessageProtocol.buildError("Database error");
+        }
+    }
+
+    // CHECK_SHELTER|shelterId
+    private String handleCheckShelter(String[] parts) {
+        if (parts.length < 2) return MessageProtocol.buildError("Missing shelter ID");
+        try {
+            Optional<Shelter> shelter = shelterDAO.findById(Integer.parseInt(parts[1]));
+            if (shelter.isPresent()) {
+                Shelter s = shelter.get();
+                return MessageProtocol.buildSuccess("Shelter found",
+                        s.getName() + "|" + s.getCapacity() + "|" + s.getCurrentOccupancy() + "|" + (s.getCapacity() - s.getCurrentOccupancy()));
+            }
+            return MessageProtocol.buildError("Shelter not found");
+        } catch (NumberFormatException e) {
+            return MessageProtocol.buildError("Invalid shelter ID");
+        } catch (SQLException e) {
+            System.out.println("DB error checking shelter: " + e.getMessage());
+            return MessageProtocol.buildError("Database error");
+        }
+    }
+
+    // ASSIGN_SHELTER|reportId|shelterId|people
+    private String handleAssignShelter(String[] parts) {
+        if (parts.length < 4) return MessageProtocol.buildError("Missing shelter assignment fields");
+        try {
+            int reportId  = Integer.parseInt(parts[1]);
+            int shelterId = Integer.parseInt(parts[2]);
+            int people    = Integer.parseInt(parts[3]);
+            Optional<Shelter> shelter = shelterDAO.findById(shelterId);
+            if (shelter.isEmpty()) return MessageProtocol.buildError("Shelter not found");
+            Shelter s = shelter.get();
+            int newOccupancy = s.getCurrentOccupancy() + people;
+            if (newOccupancy > s.getCapacity()) return MessageProtocol.buildError("Not enough space in shelter");
+            evacuationDAO.create(new EvacuationRecord(0, reportId, shelterId, people, true, people));
+            shelterDAO.updateOccupancy(shelterId, newOccupancy);
+            return MessageProtocol.buildSuccess("Shelter assigned", String.valueOf(shelterId));
+        } catch (NumberFormatException e) {
+            return MessageProtocol.buildError("Invalid number format");
+        } catch (SQLException e) {
+            System.out.println("DB error assigning shelter: " + e.getMessage());
+            return MessageProtocol.buildError("Database error");
+        }
+    }
+
+    // UPDATE_STATUS|dispatchId|newStatus
+    private String handleUpdateStatus(String[] parts) {
+        if (parts.length < 3) return MessageProtocol.buildError("Missing status fields");
+        try {
+            boolean updated = resourceDAO.updateStatus(Integer.parseInt(parts[1]), parts[2]);
+            if (updated) return MessageProtocol.buildSuccess("Status updated", parts[1]);
+            return MessageProtocol.buildError("Could not update status");
+        } catch (NumberFormatException e) {
+            return MessageProtocol.buildError("Invalid dispatch ID");
+        } catch (SQLException e) {
+            System.out.println("DB error updating status: " + e.getMessage());
+            return MessageProtocol.buildError("Database error");
+        }
+    }
+
+    // GET_RESPONSE_LOG|incidentId
+    private String handleGetResponseLog(String[] parts) {
+        if (parts.length < 2) return MessageProtocol.buildError("Missing incident ID");
+        try {
+            List<ResponseLogDAO.ResponseLog> logs = responseLogDAO.findByIncidentId(Integer.parseInt(parts[1]));
+            if (logs.isEmpty()) return MessageProtocol.buildSuccess("No logs found", "0");
+            StringBuilder sb = new StringBuilder();
+            for (ResponseLogDAO.ResponseLog log : logs) sb.append(log.action()).append(":").append(log.details()).append(",");
+            return MessageProtocol.buildSuccess("Logs fetched", sb.toString());
+        } catch (NumberFormatException e) {
+            return MessageProtocol.buildError("Invalid incident ID");
+        } catch (SQLException e) {
+            System.out.println("DB error fetching logs: " + e.getMessage());
+            return MessageProtocol.buildError("Database error");
+        }
+    }
+}
