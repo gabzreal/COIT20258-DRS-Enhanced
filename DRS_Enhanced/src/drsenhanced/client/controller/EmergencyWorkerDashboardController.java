@@ -1,5 +1,6 @@
 package drsenhanced.client.controller;
 
+
 import drsenhanced.model.Incident;
 import drsenhanced.model.StatusUpdate;
 import drsenhanced.model.User;
@@ -10,6 +11,15 @@ import drsenhanced.util.SceneManager;
 import drsenhanced.util.SessionContext;
 import java.sql.SQLException;
 import java.util.List;
+
+/**
+ * EmergencyWorkerDashboardController allows emergency workers to view mission
+ * details, update field status, request additional support, and complete
+ * incidents.
+ *
+ * @author Krishna Kakani - 12279867
+ */
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
@@ -118,6 +128,7 @@ public class EmergencyWorkerDashboardController {
 
     @FXML
     private void handleBack() {
+
         SceneManager.goBack();
     }
 
@@ -139,5 +150,13 @@ public class EmergencyWorkerDashboardController {
         alert.setHeaderText("Database operation failed");
         alert.setContentText(message);
         alert.showAndWait();
+
+        SceneManager.showDashboard();
+    }
+
+    @FXML
+    private void handleLogout() {
+        SceneManager.showEmergencyWorkerLogin();
+
     }
 }

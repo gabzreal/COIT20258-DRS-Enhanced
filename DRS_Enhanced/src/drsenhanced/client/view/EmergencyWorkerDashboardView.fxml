@@ -44,11 +44,22 @@
                     prefWidth="120"
                     prefHeight="40"
                     style="
-                    -fx-background-color:#757575;
-                    -fx-text-fill:white;
-                    -fx-font-weight:bold;
-                    -fx-background-radius:10;
-                "/>
+            -fx-background-color:#757575;
+            -fx-text-fill:white;
+            -fx-font-weight:bold;
+            -fx-background-radius:10;
+        "/>
+
+            <Button text="Logout"
+                    onAction="#handleLogout"
+                    prefWidth="120"
+                    prefHeight="40"
+                    style="
+            -fx-background-color:#D32F2F;
+            -fx-text-fill:white;
+            -fx-font-weight:bold;
+            -fx-background-radius:10;
+        "/>
 
         </HBox>
 
