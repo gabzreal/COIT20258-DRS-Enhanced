@@ -83,26 +83,36 @@
             -fx-padding:20;
       ">
 
-                        <Label text="🔥 FIRE INCIDENT"
+                        <Label fx:id="incidentTitleLabel"
+                               text="INCIDENT"
                                style="
                 -fx-font-size:28;
                 -fx-font-weight:bold;
                 -fx-text-fill:#D32F2F;
            "/>
 
-                        <Label text="Melbourne CBD"
+                        <Label fx:id="incidentLocationLabel"
+                               text="Location unavailable"
                                style="
                 -fx-font-size:18;
                 -fx-text-fill:#455A64;
            "/>
 
-                        <Label text="Priority: HIGH"
+                        <Label fx:id="incidentPriorityLabel"
+                               text="Priority: UNKNOWN"
                                style="
                 -fx-background-color:#D32F2F;
                 -fx-text-fill:white;
                 -fx-padding:5 15;
                 -fx-background-radius:20;
                 -fx-font-weight:bold;
+            "/>
+
+                        <Label fx:id="incidentDetailsLabel"
+                               text="Incident details unavailable"
+                               style="
+                -fx-font-size:14;
+                -fx-text-fill:#455A64;
            "/>
 
                     </VBox>
@@ -230,10 +240,12 @@
                         -fx-font-weight:bold;
                    "/>
 
-                                <ProgressBar progress="0.92"
+                                <ProgressBar fx:id="riskProgressBar"
+                                             progress="0"
                                              prefWidth="320"/>
 
-                                <Label text="CRITICAL (92%)"
+                                <Label fx:id="riskLevelLabel"
+                                       text="UNKNOWN"
                                        style="
                         -fx-text-fill:#D32F2F;
                         -fx-font-size:16;
@@ -301,7 +313,8 @@
                                 <Label text="Recommended Action:"
                                        style="-fx-font-weight:bold;"/>
 
-                                <Label text="Immediate Multi-Agency Deployment"
+                                <Label fx:id="recommendedActionLabel"
+                                       text="Review incident details"
                                        style="
                         -fx-text-fill:#D32F2F;
                         -fx-font-weight:bold;
