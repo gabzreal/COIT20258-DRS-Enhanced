@@ -17,7 +17,7 @@ public class DatabaseConnection {
             + "?useSSL=false&allowPublicKeyRetrieval=true"
             + "&serverTimezone=Australia/Sydney";
     private static final String DEFAULT_USER = "root";
-    private static final String DEFAULT_PASSWORD = "root123";
+    private static final String DEFAULT_PASSWORD = "pass";
 
     /**
      * Returns a connection to the MySQL database.

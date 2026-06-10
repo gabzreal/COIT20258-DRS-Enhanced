@@ -93,7 +93,7 @@ public final class SceneManager {
         SessionContext.clear();
         history.clear();
         currentRoute = null;
-        show(WORKER_LOGIN, false);
+        show(DASHBOARD, false);
     }
 
     public static void showLogin() {
