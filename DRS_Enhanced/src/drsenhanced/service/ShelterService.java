@@ -4,27 +4,63 @@
  */
 package drsenhanced.service;
 
+import drsenhanced.dao.ShelterDAO;
+import drsenhanced.model.Shelter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+
 /**
  * Manages shelter information and capacity.
- *
- * Supports shelter retrieval and occupancy updates.
  *
  * @author Hajera Begum Shaik - 12281382
  */
 public class ShelterService {
-    
-    /**
-     * Retrieves shelter information.
-     */
-    public void getShelters() {
 
+    private final ShelterDAO shelterDAO = new ShelterDAO();
+
+    /**
+     * Retrieves all shelters.
+     *
+     * @return list of shelters
+     * @throws SQLException if database access fails
+     */
+    public List<Shelter> getShelters() throws SQLException {
+        return shelterDAO.findAll();
     }
+
     /**
-     * Updates shelter occupancy or capacity.
+     * Retrieves available shelters with remaining capacity.
+     *
+     * @return list of available shelters
+     * @throws SQLException if database access fails
      */
+    public List<Shelter> getAvailableShelters() throws SQLException {
+        return shelterDAO.findAvailable();
+    }
 
-      public void updateCapacity() {
+    /**
+     * Retrieves a shelter by ID.
+     *
+     * @param shelterId shelter identifier
+     * @return shelter if found
+     * @throws SQLException if database access fails
+     */
+    public Optional<Shelter> getShelterById(int shelterId)
+            throws SQLException {
+        return shelterDAO.findById(shelterId);
+    }
 
-      }
-    
+    /**
+     * Updates shelter occupancy.
+     *
+     * @param shelterId shelter identifier
+     * @param occupancy current occupancy
+     * @return true if update succeeds
+     * @throws SQLException if database access fails
+     */
+    public boolean updateCapacity(int shelterId, int occupancy)
+            throws SQLException {
+        return shelterDAO.updateOccupancy(shelterId, occupancy);
+    }
 }
