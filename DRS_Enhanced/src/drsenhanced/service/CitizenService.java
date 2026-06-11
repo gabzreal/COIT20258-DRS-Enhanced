@@ -36,6 +36,7 @@ public class CitizenService {
                 username.trim(),
                 PasswordUtil.hashPassword(password),
                 fullName.trim(),
+               
                 "Citizen");
         return userId > 0 ? userDAO.findById(userId) : Optional.empty();
     }

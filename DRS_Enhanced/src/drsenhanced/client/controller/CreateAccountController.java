@@ -3,9 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package drsenhanced.client.controller;
+
 /**
- * CreateAccountController handles citizen account
- * registration and validation processes.
+ * CreateAccountController handles citizen account registration and validation
+ * processes.
  *
  * @author Krishna Kakani - 12279867
  */
@@ -59,7 +60,21 @@ public class CreateAccountController {
 
     @FXML
     private void handleCreateAccount() {
+        if (fullNameField.getText().isBlank()
+                || emailField.getText().isBlank()
+                || passwordField.getText().isBlank()
+                || confirmPasswordField.getText().isBlank()) {
 
+            showError("All required fields must be completed.");
+            return;
+        }
+        String email = emailField.getText().trim();
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+
+            showError("Please enter a valid email address.");
+            return;
+        }
         if (!passwordField.getText().equals(confirmPasswordField.getText())) {
             showError("Passwords do not match.");
             return;
@@ -75,7 +90,16 @@ public class CreateAccountController {
             return;
         }
         SessionContext.setCurrentUser(user.get());
+        Alert alert
+                = new Alert(Alert.AlertType.INFORMATION);
+
+        alert.setHeaderText("Account Created");
+        alert.setContentText(
+                "Your account has been created successfully.");
+
+        alert.showAndWait();
         SceneManager.showCitizenDashboard();
+
     }
 
     private void showError(String message) {

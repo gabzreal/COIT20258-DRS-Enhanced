@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 
 /**
  * Coordinates database operations that must succeed as one workflow.
@@ -60,13 +61,22 @@ public class DisasterWorkflowDAO {
     private int insertReport(Connection connection, String sql,
             int citizenId, int incidentId, Incident incident)
             throws SQLException {
+
         try (PreparedStatement statement = connection.prepareStatement(
                 sql, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, citizenId);
+
+            if (citizenId > 0) {
+                statement.setInt(1, citizenId);
+            } else {
+                statement.setNull(1, Types.INTEGER);
+            }
+
             statement.setInt(2, incidentId);
             statement.setString(3, incident.getType());
             statement.setString(4, incident.getLocation());
+
             statement.executeUpdate();
+
             return generatedId(statement, "disaster report");
         }
     }

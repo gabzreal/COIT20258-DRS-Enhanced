@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ResponseLogDAO handles database operations
- * related to response logs.
+ * ResponseLogDAO handles database operations related to response logs.
  *
  * @author Gabriel Fernandez Balbuena - 12292617
  */
@@ -28,15 +27,15 @@ public class ResponseLogDAO {
             int performedBy,
             String details,
             String timestamp) {
+
     }
 
     public int create(ResponseLog log) throws SQLException {
         String sql = "INSERT INTO response_logs "
                 + "(incident_id, action, performed_by, details) "
                 + "VALUES (?, ?, ?, ?)";
-        try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement statement = connection.prepareStatement(
-                        sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(
+                sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, log.incidentId());
             statement.setString(2, log.action());
             statement.setInt(3, log.performedBy());
@@ -53,8 +52,7 @@ public class ResponseLogDAO {
                 + "details, created_at FROM response_logs "
                 + "ORDER BY created_at DESC LIMIT ?";
         List<ResponseLog> logs = new ArrayList<>();
-        try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Math.max(1, limit));
             try (ResultSet result = statement.executeQuery()) {
                 while (result.next()) {
@@ -71,8 +69,7 @@ public class ResponseLogDAO {
                 + "details, created_at FROM response_logs "
                 + "WHERE incident_id = ? ORDER BY created_at DESC";
         List<ResponseLog> logs = new ArrayList<>();
-        try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, incidentId);
             try (ResultSet result = statement.executeQuery()) {
                 while (result.next()) {
@@ -91,5 +88,24 @@ public class ResponseLogDAO {
                 result.getInt("performed_by"),
                 result.getString("details"),
                 result.getTimestamp("created_at").toString());
+    }
+
+    public int countTodayResponses() throws SQLException {
+
+        String sql
+                = "SELECT COUNT(*) "
+                + "FROM response_logs "
+                + "WHERE DATE(created_at) = CURDATE()";
+
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement
+                = connection.prepareStatement(sql); ResultSet result
+                = statement.executeQuery()) {
+
+            if (result.next()) {
+                return result.getInt(1);
+            }
+
+            return 0;
+        }
     }
 }

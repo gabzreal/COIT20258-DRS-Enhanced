@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 /**
  * Controls scene transitions, route guards, and Back navigation history.
- *
+ * @author Krishna Kakani -12279867
  * @author Gabriel Fernandez Balbuena - 12292617
  */
 public final class SceneManager {
@@ -93,7 +93,7 @@ public final class SceneManager {
         SessionContext.clear();
         history.clear();
         currentRoute = null;
-        show(WORKER_LOGIN, false);
+        show(DASHBOARD, false);
     }
 
     public static void showLogin() {
@@ -145,32 +145,23 @@ public final class SceneManager {
     }
 
     public static void showCommandCentre() {
-        switchScene("/drsenhanced/client/view/CoordinationView.fxml",
-                "Disaster Command Centre");
+        showCityManagerDashboard();
     }
 
     public static void showFieldOperations() {
-        switchScene(
-                "/drsenhanced/client/view/DepartmentAvailabilityView.fxml",
-                "Emergency Worker Terminal");
+        showEmergencyWorkerDashboard();
     }
 
     public static void showShelterManagement() {
-        switchScene(
-                "/drsenhanced/client/view/EvacuationShelterView.fxml",
-                "Evacuation Shelter Management");
+        showCitizenDashboard();
     }
 
     public static void showSeverityAnalysis() {
-        switchScene(
-                "/drsenhanced/client/view/SeverityAnalysisView.fxml",
-                "Severity Analysis");
+        showIncidentAssessment();
     }
 
     public static void showInfrastructureImpact() {
-        switchScene(
-                "/drsenhanced/client/view/InfrastructureImpactView.fxml",
-                "Infrastructure Impact Analysis");
+        showIncidentAssessment();
     }
 
     private static void navigate(Route requestedRoute) {

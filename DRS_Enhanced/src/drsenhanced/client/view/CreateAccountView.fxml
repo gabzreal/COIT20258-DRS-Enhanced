@@ -49,25 +49,25 @@
                        promptText="Full Name"/>
 
             <TextField fx:id="emailField"
-                       promptText="Email Address"/>
+                       promptText="Email (login username)"/>
 
-            <TextField fx:id="phoneField"
-                       promptText="Phone Number"/>
+                <TextField fx:id="phoneField"
+                           promptText="Phone Number"/>
 
-            <ComboBox fx:id="suburbCombo"
-                      promptText="Select Melbourne Suburb"/>
+                <ComboBox fx:id="suburbCombo"
+                          promptText="Select Melbourne Suburb"/>
 
-            <PasswordField fx:id="passwordField"
-                           promptText="Password"/>
+                <PasswordField fx:id="passwordField"
+                               promptText="Password"/>
 
-            <PasswordField fx:id="confirmPasswordField"
-                           promptText="Confirm Password"/>
+                <PasswordField fx:id="confirmPasswordField"
+                               promptText="Confirm Password"/>
 
-            <Button text="CREATE ACCOUNT"
-                    prefHeight="50"
-                    prefWidth="250"
-                    onAction="#handleCreateAccount"
-                    style="
+                <Button text="CREATE ACCOUNT"
+                        prefHeight="50"
+                        prefWidth="250"
+                        onAction="#handleCreateAccount"
+                        style="
                         -fx-background-color:#2E7D32;
                         -fx-text-fill:white;
                         -fx-font-size:16;

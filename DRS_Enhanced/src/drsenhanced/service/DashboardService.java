@@ -17,4 +17,8 @@ public class DashboardService {
             throws SQLException {
         return responseLogDAO.findRecent(limit);
     }
+
+    public int getResponsesToday() throws SQLException {
+        return responseLogDAO.countTodayResponses();
+    }
 }

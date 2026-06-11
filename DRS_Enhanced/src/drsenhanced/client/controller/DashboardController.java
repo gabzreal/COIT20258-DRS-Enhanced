@@ -8,10 +8,13 @@ import drsenhanced.util.SessionContext;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Label;
+import java.util.List;
+import drsenhanced.service.DashboardService;
 
 /**
  * Displays live incidents and role navigation.
- *
+ * @author Krishna Kakani -12279867
  * @author Gabriel Fernandez Balbuena - 12292617
  */
 public class DashboardController {
@@ -31,20 +34,63 @@ public class DashboardController {
     private Button workerButton;
 
     @FXML
+    private Label activeIncidentsLabel;
+
+    @FXML
+    private Label criticalIncidentsLabel;
+
+    @FXML
+    private Label responsesTodayLabel;
+
+    private final DashboardService dashboardService
+            = new DashboardService();
+
+    @FXML
     public void initialize() {
         configureRoleButtons();
         try {
-            for (Incident incident : incidentService.getActiveIncidents()) {
+
+            List<Incident> incidents
+                    = incidentService.getActiveIncidents();
+
+            activeIncidentsLabel.setText(
+                    String.valueOf(incidents.size()));
+
+            long criticalCount
+                    = incidents.stream()
+                            .filter(i
+                                    -> "HIGH".equalsIgnoreCase(i.getSeverity())
+                            || "CRITICAL".equalsIgnoreCase(i.getSeverity()))
+                            .count();
+
+            criticalIncidentsLabel.setText(
+                    String.valueOf(criticalCount));
+
+            responsesTodayLabel.setText(
+                    String.valueOf(
+                            dashboardService.getResponsesToday()));
+
+            for (Incident incident : incidents) {
+
                 alertsList.getItems().add(
                         incident.getSeverity() + " - "
                         + incident.getType() + " - "
                         + incident.getLocation());
             }
+
             if (alertsList.getItems().isEmpty()) {
-                alertsList.getItems().add("No active emergency alerts");
+                alertsList.getItems().add(
+                        "No active emergency alerts");
             }
+
         } catch (java.sql.SQLException e) {
-            alertsList.getItems().add("Emergency alerts unavailable");
+
+            activeIncidentsLabel.setText("0");
+            criticalIncidentsLabel.setText("0");
+            responsesTodayLabel.setText("0");
+
+            alertsList.getItems().add(
+                    "Emergency alerts unavailable");
         }
     }
 

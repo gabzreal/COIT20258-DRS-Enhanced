@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     password_hash VARCHAR(64) NOT NULL,
     full_name VARCHAR(100) NOT NULL,
     role VARCHAR(30) NOT NULL,
+    
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -26,7 +27,7 @@ CREATE TABLE IF NOT EXISTS incidents (
 
 CREATE TABLE IF NOT EXISTS disaster_reports (
     report_id INT AUTO_INCREMENT PRIMARY KEY,
-    citizen_id INT NOT NULL,
+    citizen_id INT NULL,
     incident_id INT,
     disaster_type VARCHAR(100),
     location VARCHAR(150),

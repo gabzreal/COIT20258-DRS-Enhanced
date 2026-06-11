@@ -3,20 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
 package drsenhanced.client.controller;
+
 /**
- * DisasterReportController manages disaster report
- * creation, submission, and incident reporting.
+ * DisasterReportController manages disaster report creation, submission, and
+ * incident reporting.
  *
  * @author Krishna Kakani - 12279867
  */
-
 import drsenhanced.model.User;
 import drsenhanced.service.CitizenService;
-import drsenhanced.util.SceneManager;
 import drsenhanced.util.SessionContext;
-
 import drsenhanced.util.SceneManager;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
@@ -24,9 +21,7 @@ import javafx.scene.layout.VBox;
 
 public class DisasterReportController {
 
-
     private final CitizenService citizenService = new CitizenService();
-
 
     @FXML
     private Label severityLabel;
@@ -295,67 +290,7 @@ public class DisasterReportController {
                 );
         }
 
-        switch (disaster) {
-
-            case "Fire":
-
-                impactLabel.setText(
-                        "✓ Buildings\n"
-                        + "✓ Roads\n"
-                        + "✓ Public Transport\n\n"
-                        + "Risk Level: HIGH"
-                );
-
-                break;
-
-            case "Flood":
-
-                impactLabel.setText(
-                        "✓ Roads\n"
-                        + "✓ Drainage Systems\n"
-                        + "✓ Residential Areas\n\n"
-                        + "Risk Level: MEDIUM"
-                );
-
-                break;
-
-            case "Storm":
-
-                impactLabel.setText(
-                        "✓ Power Network\n"
-                        + "✓ Roads\n"
-                        + "✓ Trees & Infrastructure\n\n"
-                        + "Risk Level: MEDIUM"
-                );
-
-                break;
-
-            case "Building Collapse":
-
-                impactLabel.setText(
-                        "✓ Buildings\n"
-                        + "✓ Surrounding Roads\n\n"
-                        + "Risk Level: HIGH"
-                );
-
-                break;
-
-            case "Power Outage":
-
-                impactLabel.setText(
-                        "✓ Electricity Network\n"
-                        + "✓ Traffic Signals\n\n"
-                        + "Risk Level: MEDIUM"
-                );
-
-                break;
-
-            default:
-
-                impactLabel.setText(
-                        "Infrastructure review pending."
-                );
-        }
+        
 
         switch (disaster) {
 
@@ -409,22 +344,23 @@ public class DisasterReportController {
         }
 
         User citizen = SessionContext.getCurrentUser();
-        if (citizen == null
-                || !"citizen".equalsIgnoreCase(citizen.getRole())) {
-            severityStatusLabel.setText(
-                    "Please log in as a citizen before submitting.");
-            return;
-        }
+
+        int citizenId = citizen != null
+                ? citizen.getUserId()
+                : 0;
 
         try {
             String severity = switch (selectedSeverity == null
                     ? "" : selectedSeverity) {
-                case "Severe" -> "HIGH";
-                case "Minor" -> "LOW";
-                default -> "MEDIUM";
+                case "Severe" ->
+                    "HIGH";
+                case "Minor" ->
+                    "LOW";
+                default ->
+                    "MEDIUM";
             };
             var report = citizenService.submitReport(
-                    citizen.getUserId(),
+                    citizenId,
                     selectedDisasterType,
                     location,
                     severity);
@@ -447,10 +383,7 @@ public class DisasterReportController {
     @FXML
     private void handleBack() {
 
-
         SceneManager.goBack();
-
-        SceneManager.showCitizenAccess();
 
     }
 }

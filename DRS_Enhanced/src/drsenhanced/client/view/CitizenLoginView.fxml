@@ -32,7 +32,7 @@
                    "/>
 
             <TextField fx:id="usernameField"
-                       promptText="Username"/>
+                       promptText="Email (used during registration)"/>
 
             <PasswordField fx:id="passwordField"
                            promptText="Password"/>

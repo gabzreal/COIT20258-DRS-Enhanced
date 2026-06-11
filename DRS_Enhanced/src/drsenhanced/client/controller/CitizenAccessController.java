@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 
 /**
  * Provides citizen entry points and live incident alerts.
- *
+ * @author Krishna Kakani -12279867
  * @author Gabriel Fernandez Balbuena - 12292617
  */
 public class CitizenAccessController {

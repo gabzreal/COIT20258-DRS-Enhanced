@@ -144,7 +144,7 @@
                     <Label text="ACTIVE INCIDENTS"
                            style="-fx-font-weight:bold;"/>
 
-                    <Label text="12"
+                    <Label fx:id="activeIncidentsLabel"
                            style="-fx-font-size:25;
                       -fx-font-weight:bold;
                       -fx-text-fill:#C62828;"/>
@@ -160,7 +160,7 @@
                     <Label text="CRITICAL"
                            style="-fx-font-weight:bold;"/>
 
-                    <Label text="3"
+                    <Label fx:id="criticalIncidentsLabel"
                            style="-fx-font-size:25;
                       -fx-font-weight:bold;
                       -fx-text-fill:#E65100;"/>
@@ -176,7 +176,7 @@
                     <Label text="UNITS DEPLOYED"
                            style="-fx-font-weight:bold;"/>
 
-                    <Label text="18"
+                    <Label fx:id="unitsDeployedLabel"
                            style="-fx-font-size:25;
                       -fx-font-weight:bold;
                       -fx-text-fill:#2E7D32;"/>
@@ -192,7 +192,7 @@
                     <Label text="AVAILABLE SHELTERS"
                            style="-fx-font-weight:bold;"/>
 
-                    <Label text="14"
+                    <Label fx:id="availableSheltersLabel"
                            style="-fx-font-size:25;
                       -fx-font-weight:bold;
                       -fx-text-fill:#1976D2;"/>
