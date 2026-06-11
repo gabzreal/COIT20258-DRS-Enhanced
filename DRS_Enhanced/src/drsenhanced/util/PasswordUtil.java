@@ -1,5 +1,6 @@
 package drsenhanced.util;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -23,7 +24,7 @@ public class PasswordUtil {
 
             MessageDigest md = MessageDigest.getInstance("SHA-256");
 
-            byte[] hashBytes = md.digest(password.getBytes());
+            byte[] hashBytes = md.digest(password.getBytes(StandardCharsets.UTF_8));
 
             StringBuilder sb = new StringBuilder();
 
