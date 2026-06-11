@@ -64,4 +64,15 @@ public class Resource {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+    return "Resource{"
+            + "dispatchId=" + dispatchId
+            + ", incidentId=" + incidentId
+            + ", resourceType='" + resourceType + '\''
+            + ", status='" + status + '\''
+            + '}';
+}
+
 }

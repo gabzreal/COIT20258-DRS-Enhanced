@@ -52,4 +52,15 @@ public class DisasterReport {
     public void setIncidentId(int incidentId) {
         this.incidentId = incidentId;
     }
+
+    
+    @Override
+    public String toString() {
+    return "DisasterReport{"
+            + "reportId=" + reportId
+            + ", citizenId=" + citizenId
+            + ", incidentId=" + incidentId
+            + '}';
+}
+
 }

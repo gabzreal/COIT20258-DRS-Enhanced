@@ -64,4 +64,15 @@ public class DispatchRequest {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+    return "DispatchRequest{"
+            + "dispatchId=" + dispatchId
+            + ", incidentId=" + incidentId
+            + ", resourceType='" + resourceType + '\''
+            + ", status='" + status + '\''
+            + '}';
+}
+
 }

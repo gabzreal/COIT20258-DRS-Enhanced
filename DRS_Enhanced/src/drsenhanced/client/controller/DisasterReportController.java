@@ -9,10 +9,14 @@ package drsenhanced.client.controller;
  *
  * @author Krishna Kakani - 12279867
  */
+
 import drsenhanced.model.User;
 import drsenhanced.service.CitizenService;
 import drsenhanced.util.SceneManager;
 import drsenhanced.util.SessionContext;
+
+import drsenhanced.util.SceneManager;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
@@ -20,7 +24,9 @@ import javafx.scene.layout.VBox;
 
 public class DisasterReportController {
 
+
     private final CitizenService citizenService = new CitizenService();
+
 
     @FXML
     private Label severityLabel;
@@ -288,6 +294,7 @@ public class DisasterReportController {
                         "Infrastructure review pending."
                 );
         }
+
         switch (disaster) {
 
             case "Fire":
@@ -349,6 +356,7 @@ public class DisasterReportController {
                         "Infrastructure review pending."
                 );
         }
+
         switch (disaster) {
 
             case "Fire":
@@ -399,6 +407,7 @@ public class DisasterReportController {
                         + "📞 Triple Zero (000)"
                 );
         }
+
         User citizen = SessionContext.getCurrentUser();
         if (citizen == null
                 || !"citizen".equalsIgnoreCase(citizen.getRole())) {
@@ -427,11 +436,21 @@ public class DisasterReportController {
             severityStatusLabel.setText(
                     "Report could not be saved. Check database connection.");
         }
+
+        System.out.println(
+                "Incident Submitted: "
+                + selectedDisasterType
+        );
+
     }
 
     @FXML
     private void handleBack() {
 
+
         SceneManager.goBack();
+
+        SceneManager.showCitizenAccess();
+
     }
 }
