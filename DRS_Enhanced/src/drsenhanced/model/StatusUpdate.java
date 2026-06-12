@@ -76,4 +76,17 @@ public class StatusUpdate {
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
+
+    
+    @Override
+    public String toString() {
+    return "StatusUpdate{"
+            + "updateId=" + updateId
+            + ", incidentId=" + incidentId
+            + ", workerId=" + workerId
+            + ", message='" + message + '\''
+            + ", timestamp='" + timestamp + '\''
+            + '}';
+}
+
 }

@@ -1,8 +1,8 @@
 package drsenhanced.model;
 
 /**
- * Represents a basic user in the Disaster Response System.
- * This is the parent class for Citizen, EmergencyWorker and CityManager.
+ * Represents a basic user in the Disaster Response System. This is the parent
+ * class for Citizen, EmergencyWorker and CityManager.
  */
 public class User {
 
@@ -10,6 +10,8 @@ public class User {
     private String username;
     private String password;
     private String role;
+    private String phone;
+    private String suburb;
 
     /**
      * Default constructor.
@@ -25,7 +27,11 @@ public class User {
      * @param password the password
      * @param role the user role
      */
-    public User(int userId, String username, String password, String role) {
+    public User(int userId,
+            String username,
+            String password,
+            String role) {
+
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -63,6 +69,7 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
 
     @Override
     public String toString() {

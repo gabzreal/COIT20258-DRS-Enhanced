@@ -136,10 +136,11 @@
                            style="-fx-font-weight:bold;
                                   -fx-font-size:14;"/>
 
-                    <Label text="12"
+                    <Label fx:id="activeIncidentsLabel"
+                           text="0"
                            style="-fx-font-size:36;
-                                  -fx-font-weight:bold;
-                                  -fx-text-fill:#C62828;"/>
+              -fx-font-weight:bold;
+              -fx-text-fill:#C62828;"/>
 
                 </VBox>
 
@@ -157,10 +158,11 @@
                            style="-fx-font-weight:bold;
                                   -fx-font-size:14;"/>
 
-                    <Label text="3"
+                    <Label fx:id="criticalIncidentsLabel"
+                           text="0"
                            style="-fx-font-size:36;
-                                  -fx-font-weight:bold;
-                                  -fx-text-fill:#D84315;"/>
+              -fx-font-weight:bold;
+              -fx-text-fill:#D84315;"/>
 
                 </VBox>
 
@@ -178,10 +180,11 @@
                            style="-fx-font-weight:bold;
                                   -fx-font-size:14;"/>
 
-                    <Label text="27"
+                    <Label fx:id="responsesTodayLabel"
+                           text="0"
                            style="-fx-font-size:36;
-                                  -fx-font-weight:bold;
-                                  -fx-text-fill:#2E7D32;"/>
+              -fx-font-weight:bold;
+              -fx-text-fill:#2E7D32;"/>
 
                 </VBox>
 

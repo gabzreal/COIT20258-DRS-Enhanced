@@ -16,6 +16,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import drsenhanced.util.SceneManager;
+import drsenhanced.model.Incident;
+import drsenhanced.model.User;
+import drsenhanced.service.IncidentService;
+import drsenhanced.util.SessionContext;
+import drsenhanced.model.Incident;
+import drsenhanced.model.User;
+import drsenhanced.service.IncidentService;
+import drsenhanced.util.SessionContext;
+import javafx.scene.control.Label;
+import java.sql.SQLException;
 
 public class EmergencyWorkerDashboardController {
 
@@ -25,15 +35,98 @@ public class EmergencyWorkerDashboardController {
     @FXML
     private ListView<String> activityList;
 
+    private final IncidentService incidentService
+            = new IncidentService();
+
+    @FXML
+    private Label incidentLabel;
+
+    @FXML
+    private Label locationLabel;
+
+    @FXML
+    private Label priorityLabel;
+
+    @FXML
+    private Label incidentIdLabel;
+
+    @FXML
+    private Label typeLabel;
+
+    @FXML
+    private Label affectedLabel;
+
+    @FXML
+    private Label unitsLabel;
+
+    @FXML
+    private Label statusLabel;
+
+    @FXML
+    private Label commandLabel;
+
     @FXML
     public void initialize() {
 
-        activityList.getItems().addAll(
-                "11:20 Assigned to Incident",
-                "11:24 Team Dispatched",
-                "11:30 Travelling to Site",
-                "11:35 ETA Updated"
-        );
+        User worker = SessionContext.getCurrentUser();
+
+        if (worker == null) {
+            return;
+        }
+
+        try {
+
+            for (Incident incident
+                    : incidentService.getActiveIncidents()) {
+
+                if (worker.getUsername().equals(
+                        incident.getAssignedWorker())) {
+
+                    loadMission(incident);
+                    return;
+                }
+            }
+
+            incidentLabel.setText("No assigned incident");
+
+        } catch (Exception e) {
+
+            incidentLabel.setText("Unable to load mission");
+        }
+    }
+
+    private void loadMission(Incident incident) {
+
+        incidentLabel.setText(
+                "Incident: " + incident.getType());
+
+        locationLabel.setText(
+                "Location: " + incident.getLocation());
+
+        priorityLabel.setText(
+                "Priority: " + incident.getSeverity());
+
+        incidentIdLabel.setText(
+                "Incident ID : INC-" + incident.getIncidentId());
+
+        typeLabel.setText(
+                "Type : " + incident.getType());
+
+        affectedLabel.setText(
+                "Affected Citizens : Unknown");
+
+        unitsLabel.setText(
+                "Required Units : 1");
+
+        statusLabel.setText(
+                "Area Status : " + incident.getStatus());
+
+        commandLabel.setText(
+                "Command Centre : " + incident.getLocation());
+
+        activityList.getItems().add(
+                "Assigned to Incident #"
+                + incident.getIncidentId());
     }
 
     @FXML
@@ -78,15 +171,52 @@ public class EmergencyWorkerDashboardController {
     @FXML
     private void handleCompleteMission() {
 
-        activityList.getItems().add(
-                "✅ Mission Completed Successfully"
-        );
+        User worker = SessionContext.getCurrentUser();
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Mission Completed");
-        alert.setHeaderText(null);
-        alert.setContentText("Incident has been marked as resolved.");
-        alert.showAndWait();
+        if (worker == null) {
+            return;
+        }
+
+        try {
+
+            for (Incident incident
+                    : incidentService.getActiveIncidents()) {
+
+                if (worker.getUsername().equals(
+                        incident.getAssignedWorker())) {
+
+                    incidentService.updateStatus(
+                            incident.getIncidentId(),
+                            "RESOLVED");
+
+                    activityList.getItems().add(
+                            "✅ Mission Completed Successfully");
+
+                    Alert alert
+                            = new Alert(Alert.AlertType.INFORMATION);
+
+                    alert.setTitle("Mission Completed");
+                    alert.setHeaderText(null);
+                    alert.setContentText(
+                            "Incident has been marked as resolved.");
+
+                    alert.showAndWait();
+
+                    return;
+                }
+            }
+
+        } catch (SQLException e) {
+
+            Alert alert
+                    = new Alert(Alert.AlertType.ERROR);
+
+            alert.setHeaderText("Update Failed");
+            alert.setContentText(
+                    "Unable to update incident status.");
+
+            alert.showAndWait();
+        }
     }
 
     @FXML

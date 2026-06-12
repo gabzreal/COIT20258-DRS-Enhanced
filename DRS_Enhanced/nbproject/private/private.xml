@@ -3,15 +3,32 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/database/DatabaseConnection.java</file>
-            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/view/EmergencyWorkerDashboardView.fxml</file>
-            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/controller/EmergencyWorkerDashboardController.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/controller/DisasterReportController.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/util/SceneManager.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/controller/DashboardController.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/view/Dashboard.fxml</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/dao/ResponseLogDAO.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/controller/CreateAccountController.java</file>
             <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/view/CreateAccountView.fxml</file>
-            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/util/PasswordUtil.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/view/CitizenLoginView.fxml</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/dao/UserDAO.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/dao/UserDAOTest.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/controller/CitizenAccessController.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/controller/CitizenDashboardController.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/controller/CitizenLoginController.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/view/CitizenDashboardView.fxml</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/dao/DisasterReportDAO.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/view/CityManagerDashboardView.fxml</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/controller/CityManagerDashboardController.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/dao/ShelterDAO.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/controller/EmergencyWorkerLoginController.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/controller/LoginController.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/view/IncidentAssessmentView.fxml</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/controller/EmergencyWorkerDashboardController.java</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/view/EmergencyWorkerDashboardView.fxml</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/controller/IncidentAssessmentController.java</file>
             <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/client/controller/CityManagerLoginController.java</file>
-            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/dao/AssessmentDAO.java</file>
-            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/dao/CoordinationRecordDAO.java</file>
-            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/nbproject/project.properties</file>
+            <file>file:/C:/COIT20258-DRS-Enhanced/DRS_Enhanced/src/drsenhanced/database/sql/demo_data.sql</file>
         </group>
     </open-files>
 </project-private>

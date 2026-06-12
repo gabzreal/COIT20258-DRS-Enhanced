@@ -10,16 +10,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import drsenhanced.model.Shelter;
+import drsenhanced.service.ShelterService;
+import javafx.scene.control.Alert;
 
 /**
  * Displays citizen reports, active incidents, and safety guidance.
  *
- * @author Gabriel Fernandez Balbuena - 12292617
+ * 
+ * @author Krishna Kakani -12279867
  */
 public class CitizenDashboardController {
 
     private final CitizenService citizenService = new CitizenService();
     private final IncidentService incidentService = new IncidentService();
+    private final ShelterService shelterService = new ShelterService();
     @FXML
     private ListView<String> reportList;
 
@@ -33,8 +38,20 @@ public class CitizenDashboardController {
     private Label guideText;
 
     @FXML
+    private Label shelterNameLabel;
+
+    @FXML
+    private Label shelterCapacityLabel;
+
+    @FXML
+    private Label shelterDistanceLabel;
+
+    @FXML
     public void initialize() {
+
         loadDatabaseData();
+
+        loadShelterData();
 
         guideType.getItems().addAll(
                 "Bushfire", "Flood", "Storm", "Heatwave");
@@ -90,6 +107,64 @@ public class CitizenDashboardController {
         }
     }
 
+    private void loadShelterData() {
+
+        try {
+
+            var shelters = shelterService.getShelters();
+
+            if (!shelters.isEmpty()) {
+
+                Shelter shelter = shelters.get(0);
+
+                shelterNameLabel.setText(
+                        shelter.getName());
+
+                shelterCapacityLabel.setText(
+                        "Capacity: "
+                        + shelter.getCurrentOccupancy()
+                        + " / "
+                        + shelter.getCapacity());
+
+                shelterDistanceLabel.setText(
+                        "Nearest Available Shelter");
+
+            } else {
+
+                shelterNameLabel.setText(
+                        "No shelters available");
+
+                shelterCapacityLabel.setText("");
+
+                shelterDistanceLabel.setText("");
+            }
+
+        } catch (Exception e) {
+
+            shelterNameLabel.setText(
+                    "Shelter information unavailable");
+
+            shelterCapacityLabel.setText("");
+
+            shelterDistanceLabel.setText("");
+        }
+    }
+
+    @FXML
+    private void handleDirections() {
+
+        Alert alert = new Alert(
+                Alert.AlertType.INFORMATION);
+
+        alert.setHeaderText(
+                "Directions");
+
+        alert.setContentText(
+                "Directions feature will be available in a future release.");
+
+        alert.showAndWait();
+    }
+
     private String formatIncident(Incident incident) {
         return "INC-" + incident.getIncidentId()
                 + " | " + incident.getType()
@@ -98,27 +173,31 @@ public class CitizenDashboardController {
 
     private void updateGuide(String selected) {
         String text = switch (selected) {
-            case "Flood" -> "Before:\n"
-                    + "- Move valuables to higher levels\n"
-                    + "- Prepare emergency supplies\n\n"
-                    + "During:\n"
-                    + "- Never drive through flood water\n"
-                    + "- Follow SES instructions\n\n"
-                    + "After:\n- Avoid contaminated water";
-            case "Storm" -> "Before:\n- Secure outdoor objects\n\n"
-                    + "During:\n- Stay indoors\n"
-                    + "- Avoid windows and power lines\n\n"
-                    + "After:\n- Report hazards safely";
-            case "Heatwave" -> "Before:\n- Stock water supplies\n\n"
-                    + "During:\n- Stay hydrated\n"
-                    + "- Avoid outdoor activities\n\n"
-                    + "After:\n- Check on vulnerable people";
-            default -> "Before:\n- Prepare emergency kit\n"
-                    + "- Monitor VicEmergency alerts\n\n"
-                    + "During:\n- Follow evacuation orders\n"
-                    + "- Leave early if instructed\n\n"
-                    + "After:\n- Avoid damaged areas\n"
-                    + "- Follow emergency services advice";
+            case "Flood" ->
+                "Before:\n"
+                + "- Move valuables to higher levels\n"
+                + "- Prepare emergency supplies\n\n"
+                + "During:\n"
+                + "- Never drive through flood water\n"
+                + "- Follow SES instructions\n\n"
+                + "After:\n- Avoid contaminated water";
+            case "Storm" ->
+                "Before:\n- Secure outdoor objects\n\n"
+                + "During:\n- Stay indoors\n"
+                + "- Avoid windows and power lines\n\n"
+                + "After:\n- Report hazards safely";
+            case "Heatwave" ->
+                "Before:\n- Stock water supplies\n\n"
+                + "During:\n- Stay hydrated\n"
+                + "- Avoid outdoor activities\n\n"
+                + "After:\n- Check on vulnerable people";
+            default ->
+                "Before:\n- Prepare emergency kit\n"
+                + "- Monitor VicEmergency alerts\n\n"
+                + "During:\n- Follow evacuation orders\n"
+                + "- Leave early if instructed\n\n"
+                + "After:\n- Avoid damaged areas\n"
+                + "- Follow emergency services advice";
         };
         guideText.setText(text);
     }

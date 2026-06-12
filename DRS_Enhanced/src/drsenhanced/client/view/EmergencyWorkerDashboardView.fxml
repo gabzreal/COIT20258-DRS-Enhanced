@@ -97,9 +97,9 @@
                                         -fx-font-weight:bold;
                                    "/>
 
-                            <Label text="Incident: Fire"/>
-                            <Label text="Location: Melbourne CBD"/>
-                            <Label text="Priority: HIGH"/>
+                            <Label fx:id="incidentLabel"/>
+                            <Label fx:id="locationLabel"/>
+                            <Label fx:id="priorityLabel"/>
 
                         </VBox>
 
@@ -144,12 +144,12 @@
                                         -fx-font-weight:bold;
                                    "/>
 
-                            <Label text="Incident ID : INC-1001"/>
-                            <Label text="Type : Fire"/>
-                            <Label text="Affected Citizens : 15"/>
-                            <Label text="Required Fire Units : 4"/>
-                            <Label text="Area Status : Active Emergency"/>
-                            <Label text="Command Centre : Melbourne CBD"/>
+                            <Label fx:id="incidentIdLabel"/>
+                            <Label fx:id="typeLabel"/>
+                            <Label fx:id="affectedLabel"/>
+                            <Label fx:id="unitsLabel"/>
+                            <Label fx:id="statusLabel"/>
+                            <Label fx:id="commandLabel"/>
 
                         </VBox>
 

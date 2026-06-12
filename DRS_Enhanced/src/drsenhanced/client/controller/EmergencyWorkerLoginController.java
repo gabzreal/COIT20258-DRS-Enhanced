@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 
 /**
  * Authenticates emergency workers and displays live incident alerts.
- *
+ * @author Krishna Kakani -12279867
  * @author Gabriel Fernandez Balbuena - 12292617
  */
 public class EmergencyWorkerLoginController {

@@ -269,23 +269,30 @@
                         -fx-font-weight:bold;
                    "/>
 
-                                <Label text="🚒 Fire Units Required: 4"/>
-                                <Label text="🚑 Ambulances Required: 2"/>
-                                <Label text="👮 Police Units Required: 1"/>
+                                <Label fx:id="resourceLabel1"
+                                       text="Resource 1"/>
+
+                                <Label fx:id="resourceLabel2"
+                                       text="Resource 2"/>
+
+                                <Label fx:id="resourceLabel3"
+                                       text="Resource 3"/>
 
                                 <Separator/>
 
-                                <Label text="⏱ ETA: 7 Minutes"
+                                <Label fx:id="etaLabel"
+                                       text="ETA"
                                        style="
-                        -fx-font-weight:bold;
-                        -fx-text-fill:#2E7D32;
-                   "/>
+            -fx-font-weight:bold;
+            -fx-text-fill:#2E7D32;
+       "/>
 
-                                <Label text="⚡ Confidence: 92%"
+                                <Label fx:id="confidenceLabel"
+                                       text="Confidence"
                                        style="
-                        -fx-font-weight:bold;
-                        -fx-text-fill:#1565C0;
-                   "/>
+            -fx-font-weight:bold;
+            -fx-text-fill:#1565C0;
+       "/>
 
                             </VBox>
 

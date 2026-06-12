@@ -16,8 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * DisasterReportDAO handles database operations
- * related to disaster reports.
+ * DisasterReportDAO handles database operations related to disaster reports.
  *
  * @author Gabriel Fernandez Balbuena - 12292617
  */
@@ -26,10 +25,13 @@ public class DisasterReportDAO {
     public int create(DisasterReport report) throws SQLException {
         String sql = "INSERT INTO disaster_reports "
                 + "(citizen_id, incident_id) VALUES (?, ?)";
-        try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement statement = connection.prepareStatement(
-                        sql, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, report.getCitizenId());
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(
+                sql, Statement.RETURN_GENERATED_KEYS)) {
+            if (report.getCitizenId() > 0) {
+                statement.setInt(1, report.getCitizenId());
+            } else {
+                statement.setNull(1, java.sql.Types.INTEGER);
+            }
             if (report.getIncidentId() > 0) {
                 statement.setInt(2, report.getIncidentId());
             } else {
@@ -52,8 +54,7 @@ public class DisasterReportDAO {
                 + "FROM disaster_reports WHERE citizen_id = ? "
                 + "ORDER BY report_id DESC";
         List<DisasterReport> reports = new ArrayList<>();
-        try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, citizenId);
             try (ResultSet result = statement.executeQuery()) {
                 while (result.next()) {
@@ -68,8 +69,7 @@ public class DisasterReportDAO {
             throws SQLException {
         String sql = "SELECT report_id, citizen_id, incident_id "
                 + "FROM disaster_reports WHERE incident_id = ?";
-        try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, incidentId);
             try (ResultSet result = statement.executeQuery()) {
                 return result.next()
@@ -83,8 +83,7 @@ public class DisasterReportDAO {
             throws SQLException {
         String sql = "UPDATE disaster_reports SET incident_id = ? "
                 + "WHERE report_id = ?";
-        try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, incidentId);
             statement.setInt(2, reportId);
             return statement.executeUpdate() == 1;

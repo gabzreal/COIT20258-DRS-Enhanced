@@ -199,11 +199,14 @@
                        style="-fx-font-size:20;
                               -fx-font-weight:bold;"/>
 
-                <Label text="Melbourne Town Hall Shelter"/>
-                <Label text="Capacity: 120 / 200"/>
-                <Label text="Distance: 1.8 km"/>
+                <Label fx:id="shelterNameLabel"/>
+
+                <Label fx:id="shelterCapacityLabel"/>
+
+                <Label fx:id="shelterDistanceLabel"/>
 
                 <Button text="View Directions"
+                        onAction="#handleDirections"
                         prefWidth="180"
                         style="-fx-background-color:#2E7D32;
                                -fx-text-fill:white;

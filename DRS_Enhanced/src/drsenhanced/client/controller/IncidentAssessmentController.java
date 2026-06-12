@@ -14,6 +14,7 @@ import javafx.scene.control.ProgressBar;
 /**
  * Persists manager dispatch decisions for the selected incident.
  *
+ * @author Krishna Kakani - 12279867
  * @author Gabriel Fernandez Balbuena - 12292617
  */
 public class IncidentAssessmentController {
@@ -43,18 +44,89 @@ public class IncidentAssessmentController {
 
     @FXML
     private Label recommendedActionLabel;
+    @FXML
+    private Label resourceLabel1;
+
+    @FXML
+    private Label resourceLabel2;
+
+    @FXML
+    private Label resourceLabel3;
+
+    @FXML
+    private Label etaLabel;
+
+    @FXML
+    private Label confidenceLabel;
 
     @FXML
     private void initialize() {
         displayIncident(SessionContext.getSelectedIncident());
     }
 
+    private void updateRecommendations(Incident incident) {
+
+        switch (incident.getType()) {
+
+            case "Fire" -> {
+                resourceLabel1.setText("Fire Units Required: 6");
+                resourceLabel2.setText("Ambulances Required: 3");
+                resourceLabel3.setText("Police Units Required: 2");
+                etaLabel.setText("ETA: 5 Minutes");
+                confidenceLabel.setText("Confidence: 95%");
+            }
+
+            case "Flood" -> {
+                resourceLabel1.setText("SES Units Required: 5");
+                resourceLabel2.setText("Ambulances Required: 2");
+                resourceLabel3.setText("Police Units Required: 1");
+                etaLabel.setText("ETA: 12 Minutes");
+                confidenceLabel.setText("Confidence: 91%");
+            }
+
+            case "Storm Damage" -> {
+                resourceLabel1.setText("SES Units Required: 4");
+                resourceLabel2.setText("Power Crews Required: 3");
+                resourceLabel3.setText("Police Units Required: 1");
+                etaLabel.setText("ETA: 15 Minutes");
+                confidenceLabel.setText("Confidence: 89%");
+            }
+
+            case "Power Outage" -> {
+                resourceLabel1.setText("Power Crews Required: 5");
+                resourceLabel2.setText("Traffic Control Units: 2");
+                resourceLabel3.setText("Support Teams Required: 1");
+                etaLabel.setText("ETA: 20 Minutes");
+                confidenceLabel.setText("Confidence: 88%");
+            }
+
+            default -> {
+                resourceLabel1.setText("Rescue Units Required: 8");
+                resourceLabel2.setText("Ambulances Required: 5");
+                resourceLabel3.setText("Police Units Required: 3");
+                etaLabel.setText("ETA: 4 Minutes");
+                confidenceLabel.setText("Confidence: 97%");
+            }
+        }
+    }
+
     @FXML
     private void handleDispatch() {
         Incident incident = SessionContext.getSelectedIncident();
         User manager = SessionContext.getCurrentUser();
+        
         if (incident == null || manager == null) {
             showStatus("Select an incident from the dashboard first.", false);
+            return;
+        }
+        if (incident.getAssignedWorker() != null
+                && !incident.getAssignedWorker().isBlank()) {
+
+            showStatus(
+                    "Already assigned to "
+                    + incident.getAssignedWorker(),
+                    false);
+
             return;
         }
 
@@ -105,15 +177,21 @@ public class IncidentAssessmentController {
         riskProgressBar.setProgress(risk);
         riskLevelLabel.setText(severity + " (" + Math.round(risk * 100) + "%)");
         recommendedActionLabel.setText(recommendationFor(type, severity));
+        updateRecommendations(incident);
     }
 
     private double riskFor(String severity) {
         return switch (severity) {
-            case "CRITICAL" -> 0.95;
-            case "HIGH" -> 0.80;
-            case "MEDIUM" -> 0.55;
-            case "LOW" -> 0.30;
-            default -> 0.10;
+            case "CRITICAL" ->
+                0.95;
+            case "HIGH" ->
+                0.80;
+            case "MEDIUM" ->
+                0.55;
+            case "LOW" ->
+                0.30;
+            default ->
+                0.10;
         };
     }
 

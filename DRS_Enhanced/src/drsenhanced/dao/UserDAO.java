@@ -35,17 +35,17 @@ public class UserDAO {
         return createUser(username, passwordHash, fullName, role) > 0;
     }
 
-    public int createUser(String username, String passwordHash,
-            String fullName, String role) {
+    public int createUser(String username,
+            String passwordHash,
+            String fullName,
+            String role) {
 
         String sql = "INSERT INTO users "
                 + "(username, password_hash, full_name, role) "
                 + "VALUES (?, ?, ?, ?)";
 
         try (Connection connection
-                = DatabaseConnection.getConnection();
-
-                PreparedStatement statement
+                = DatabaseConnection.getConnection(); PreparedStatement statement
                 = connection.prepareStatement(
                         sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -71,11 +71,15 @@ public class UserDAO {
     }
 
     public Optional<User> findByUsername(String username) {
-        String sql = "SELECT user_id, username, password_hash, role "
+        String sql = "SELECT user_id,\n"
+                + "       username,\n"
+                + "       password_hash,\n"
+                + "       full_name,\n"
+                
+                + "       role "
                 + "FROM users WHERE username = ?";
 
-        try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement statement
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement
                 = connection.prepareStatement(sql)) {
             statement.setString(1, username);
 
@@ -91,10 +95,14 @@ public class UserDAO {
     }
 
     public Optional<User> findById(int userId) {
-        String sql = "SELECT user_id, username, password_hash, role "
+        String sql = "SELECT user_id,\n"
+                + "       username,\n"
+                + "       password_hash,\n"
+                + "       full_name,\n"
+                
+                + "       role "
                 + "FROM users WHERE user_id = ?";
-        try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement statement
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement
                 = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
             try (ResultSet result = statement.executeQuery()) {
@@ -109,11 +117,15 @@ public class UserDAO {
     }
 
     public List<User> findByRole(String role) {
-        String sql = "SELECT user_id, username, password_hash, role "
+        String sql = "SELECT user_id,\n"
+                + "       username,\n"
+                + "       password_hash,\n"
+                + "       full_name,\n"
+                
+                + "       role "
                 + "FROM users WHERE role = ? ORDER BY username";
         List<User> users = new ArrayList<>();
-        try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement statement
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement
                 = connection.prepareStatement(sql)) {
             statement.setString(1, role);
             try (ResultSet result = statement.executeQuery()) {
@@ -139,6 +151,7 @@ public class UserDAO {
                 result.getInt("user_id"),
                 result.getString("username"),
                 result.getString("password_hash"),
+               
                 result.getString("role"));
     }
 }
